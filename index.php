@@ -24,6 +24,10 @@
     </main>
     <!-- and lastly is our footer where the end stuff is located -->
     <footer>
-
+        <section>
+            <div>
+                <p>femboy shop 2026<p>
+            </div>
+        </section>
     </footer>
 </html>
