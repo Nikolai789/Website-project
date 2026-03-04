@@ -11,14 +11,13 @@ body header {
     background-color: rgb(9, 132, 217) ;
     padding-bottom: 30px;
     padding-top: 30px;
+    
 }
 body header section h1 {
     text-align: left;
     margin-left: 20px;
 
 }
-
-
 
 body footer section div {
     position: fixed;
