@@ -38,7 +38,7 @@ nav a{
 }
 
 nav a:hover, nav a.active{
-    background: rgb(95, 134, 44);
+    background: #5f862c;
     color: white;
     border-radius: 3px;
 }
