@@ -1,0 +1,70 @@
+/* main body html rules */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: sans-serif;
+}
+
+/* navigation and stuff shit rules */
+
+nav{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    grid-column-gap: 30px;
+    grid-template-rows: 70px;
+    box-shadow: 0 5px 5px rgba(0,0,0, 0.15);
+    background-color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+nav .brand{
+    font-size: 28px;
+    font-weight: bold;
+}
+
+nav a{
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 35px;
+    transition: background-color 0.3s ,color 0.3s;
+    color: rgb(0, 0, 0);
+}
+
+nav a:hover, nav a.active{
+    background: #5f862c;
+    color: white;
+    border-radius: 3px;
+}
+ 
+/*header and stuff rules */
+
+header{
+    padding: 40px 30px;
+    background-color: rgb(233, 233, 233);
+}
+header h1{}
+
+header .subtitle{
+    margin-top: 10px;
+    line-height: 20px;
+}
+
+/* footer rules and stuff */
+
+footer{
+    background-color: rgb(61, 61, 61);
+    padding: 30px;
+    width: 100%;
+    color: white;
+    position: fixed;
+    bottom: 0;
+
+
+}

@@ -17,7 +17,7 @@
     <?php include "includes/header.php" ?>
 
     <main>
-
+        <h2>this is the contact page</h2>
     </main>
     
     <?php include "includes/footer.php" ?>
