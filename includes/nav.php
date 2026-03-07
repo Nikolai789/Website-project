@@ -11,4 +11,10 @@
                 <a href="login.php">Login/register</a>
             </div>
         </header>
+        <hr>
+        <div class="cart-container">
+            <a class="cart" href="check-out/checkout.php">🛒</a>
+            <!-- just an idea. not official -->
+        </div>
+        <hr>
     </nav>
