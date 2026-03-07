@@ -12,25 +12,23 @@ body{
 
 /* navigation and stuff shit rules */
 
-nav{
-    display: grid;
-    grid-template-columns: auto 1fr;
+.navbar{
+    display: flex;
     align-items: center;
-    grid-column-gap: 30px;
-    grid-template-rows: 70px;
+    justify-content: space-between;
     box-shadow: 0 5px 5px rgba(0,0,0, 0.15);
     background-color: white;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 15px 30px;
 }
 
 nav .brand{
-    font-size: 28px;
+    font-size: 30px;
     font-weight: bold;
 }
 
 nav a{
     text-decoration: none;
+    margin: 0px 10px;
     display: inline-block;
     padding: 10px 35px;
     transition: background-color 0.3s ,color 0.3s;
@@ -42,14 +40,18 @@ nav a:hover, nav a.active{
     color: white;
     border-radius: 3px;
 }
+
+.registerlogin a {
+    margin-left: auto;
+}
  
 /*header and stuff rules */
 
 header{
+    text-align: center;
     padding: 40px 30px;
-    background-color: rgb(233, 233, 233);
+    background-color: rgb(196, 196, 196);
 }
-header h1{}
 
 header .subtitle{
     margin-top: 10px;
@@ -60,11 +62,11 @@ header .subtitle{
 
 footer{
     background-color: rgb(61, 61, 61);
+    text-align: center;
     padding: 30px;
     width: 100%;
     color: white;
     position: fixed;
     bottom: 0;
-
 
 }

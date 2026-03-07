@@ -1,6 +1,6 @@
     <header>
-        <h1>Welcome to Periph Store</h1>
-        <p class = "subtitle">shop now cuz our shop is full of amazing things</p>
+        <h1>Welcome to GearHub!</h1>
+        <p class = "subtitle">Looking for quality headsets, mouses, and keyboards? Shop now to our most trusted online store.</p>
 
 
     </header>

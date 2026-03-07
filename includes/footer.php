@@ -1,3 +1,3 @@
     <footer>
-        sup bro I am the shop footer
+        @GearHub 2026. All rights reserved.
     </footer>
