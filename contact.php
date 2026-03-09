@@ -14,10 +14,45 @@
 </head>
 <body>
     <?php include "includes/nav.php" ?>
-    <?php include "includes/header.php" ?>
 
-    <main>
-        <h2>this is the contact page</h2>
+    <main class="Contact">
+        <div class="contact_intro">
+            <h1>Contact Us</h1>
+            <p>If you have any questions or feedback, feel free to reach out to us!</p>
+        </div>
+
+        <hr>
+
+        <h2>Contact Form</h2>
+        <form action="contact.php" method="post">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" rows="5" required></textarea><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+
+        <div class="contact_details">
+            <h2>Our Contact Details</h2>
+            <p><strong>Email:</strong> dummy@gmail.comp</p>
+            <p><strong>Phone:</strong> +1 234 567 890</p>
+            <p><strong>Address:</strong> 123 Main Street, Anytown, USA</p>
+        </div>
+
+        <div class="Follow_us">
+            <h2>Follow Us</h2>
+            <p>Stay connected with us on social media:</p>
+            <ul>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+            </ul>
+        </div>
     </main>
     
     <?php include "includes/footer.php" ?>
