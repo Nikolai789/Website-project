@@ -9,6 +9,7 @@
     <meta name="keywords" content= "mouse, keyboards, headphones"> 
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
     <title>Periph</title>
 
 </head>

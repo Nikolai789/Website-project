@@ -1,0 +1,16 @@
+/*header and stuff rules */
+
+header{
+    text-align: center;
+    padding: 40px 30px;
+    background-color: rgb(196, 196, 196);
+}
+
+header .Welcome{
+    color: #5f862c;
+}
+
+header .subtitle{
+    margin-top: 10px;
+    line-height: 20px;
+}
