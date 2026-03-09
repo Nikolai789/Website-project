@@ -56,12 +56,36 @@ nav a:hover, nav a.active{
     margin-left: auto;
 }
  
+hr{
+    border: none;
+    height: 3px;
+    background-color: #5f862c;
+}
+
+nav .cart-container{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 20px;
+}
+
+nav .cart-container .cart{
+    font-size: 1.2rem;
+    border-radius: 15px;
+    text-decoration: none;
+
+}
+
 /*header and stuff rules */
 
 header{
     text-align: center;
     padding: 40px 30px;
     background-color: rgb(196, 196, 196);
+}
+
+header .Welcome{
+    color: #5f862c;
 }
 
 header .subtitle{
