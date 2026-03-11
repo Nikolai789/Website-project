@@ -15,7 +15,12 @@ body{
 }
 
 .container {
-    margin: 0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .form-box{
@@ -39,7 +44,8 @@ h2{
 }
 
 input{
-    width: 95%;
+    width: 100%;
+    box-sizing: border-box;
     padding: 12px;
     background: #eee;
     border-radius: 6px;
