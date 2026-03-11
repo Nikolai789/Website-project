@@ -31,7 +31,7 @@
                 10%{ opacity: 1; animation-timing-function:ease-out;}
                 <?php echo round (100 /$total_images); ?>%{opacity: 1;}
                 <?php echo round(100/$total_images)+ 10;?>% {opacity: 0;}
-                100%{opacity:0;}
+                <?php echo round(100 / $total_images) . '%'; ?>
             }
         </style>
     </header>
