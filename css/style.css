@@ -57,24 +57,46 @@ nav a:hover, nav a.active{
     margin-left: auto;
 }
  
-hr{
+.greenhr{
     border: none;
     height: 3px;
     background-color: #5f862c;
 }
 
-nav .cart-container{
+nav .nav2{
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: center;
     padding-right: 20px;
+    background-color: rgb(56, 53, 53);
 }
 
-nav .cart-container .cart{
+nav .nav2 .cart{
     font-size: 1.2rem;
     border-radius: 15px;
     text-decoration: none;
+}
 
+/* search bar design*/
+.search-bar {
+  position: relative;
+  width: 250px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 35px 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.search-bar span {
+  position: absolute;
+  right: 10px;
+  top: 8px;
 }
 
 /* footer rules and stuff */
@@ -100,12 +122,11 @@ footer{
     line-height: 50px;
 }
 
-.top_hr {
-    margin-top: -20px;
-}
-
 .hr_bot {
+    border: none;
     margin-bottom: -20px;
+    height: 2px;
+    background-color: black;
 }
 
 .Introduction, .Offers, .Why_choose_us, .Mission, .Our_team {
@@ -113,7 +134,8 @@ footer{
     border-radius: 12px;
     padding: 50px;
     transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
-    margin: 30px;
+    margin: 50px;
+    margin-top: -20px;
     line-height: 40px;
 }
 
@@ -126,6 +148,10 @@ footer{
 
 .Offers ul {
     list-style-type: none;
+}
+
+.about_us > .top_hr {
+    color: black;
 }
 
 /* contact us rules and stuff */
@@ -222,3 +248,4 @@ footer{
     margin-bottom: 20px;
     color: #333;
 }
+
