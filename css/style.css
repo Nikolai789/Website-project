@@ -37,6 +37,9 @@ nav .brand{
     font-weight: bold;
     color: black;
 }
+nav .green-text{
+    color:#5f862c;
+}
 
 nav a{
     text-decoration: none;

@@ -1,6 +1,6 @@
     <nav>
         <header class = "navbar">
-            <div class = "brand">GearHub</div>
+            <div class = "brand">Gear<span class="green-text">Hub</span></div>
             <div class = "links">
                 <a data-active="index" href="index.php">Home</a>
                 <a data-active="about" href="about.php">About</a>
