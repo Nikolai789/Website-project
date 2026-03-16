@@ -9,6 +9,7 @@
     <meta name="keywords" content= "mouse, keyboards, headphones"> 
 
     <link rel="stylesheet" href="css/style.css">
+    
     <link rel="stylesheet" href="css/header.css">
     <title>Periph</title>
 
@@ -18,7 +19,15 @@
     <?php include "includes/header.php" ?>
 
     <main>
+        <div class="left">
+            <div class="section-title">Product Categories</div>
+            <a href="">Mouses</a>
+            <a href="">Keyboards</a>
+        </div>
 
+        <div>
+            <div class="section-title">Products</div>
+        </div>
     </main>
     
     <?php include "includes/footer.php" ?>

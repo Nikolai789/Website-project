@@ -16,7 +16,6 @@
     <?php include "includes/nav.php" ?>
 
     <main class="about_us">
-        <hr class="top_hr">
         <div class="Introduction">
             <h1>About GearHub</h1>
             <p>We are a leading retailer of high-quality gadget peripherals, offering the latest and greatest in mouse, keyboards, and headphones.</p>
