@@ -16,7 +16,9 @@
 </head>
 <body>
     <?php include "includes/nav.php" ?>
+    <?php include "includes/second_nav.php" ?>
     <?php include "includes/header.php" ?>
+ 
 
     <main>
         <div class="left">
