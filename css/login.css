@@ -83,3 +83,13 @@ p a{
 p a:hover{
     text-decoration: underline;
 }
+
+.error-message{
+    color: red;
+    font-size: 16px;
+    margin-bottom: 20px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    text-align: center;
+}

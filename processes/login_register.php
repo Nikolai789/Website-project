@@ -24,14 +24,19 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     $result = $conn->query("SELECT * FROM users WHERE email = '$email'");
-    if ($resukt->num_rows > 0) {
-        $user = $resukt->fetch_assoc();
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) { // this checks if the password is correct
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
-            header("Location: index.php"); // this redirects the user to the main page after logging in
+
+            if ($user['role'] === 'admin') {
+                header("Location: admin.php");
+            } else {
+                header("Location: index.php");
+            }
+            exit();
         }
-        exit();
     } 
 }
 $_SESSION['login_error'] = 'Incorrect email or password!';
