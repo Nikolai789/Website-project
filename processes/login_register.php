@@ -1,7 +1,7 @@
 <?php
 
 session_start(); // this fucntion starts the session which allows us to store certain data that can access across pages during user session
-require_once "config.php"; // this is contains the configuration to connect to the database
+require_once __DIR__ . "/../configurations/config.php"; // this contains the configuration to connect to the database
 
 if (isset($_POST['register'])) { // this checks if the register button is clicked
     $username = $_POST['username'];
@@ -13,9 +13,9 @@ if (isset($_POST['register'])) { // this checks if the register button is clicke
         $_SESSION['register_error'] = 'Email is already registered!';
         $_SESSION['active_form'] = 'register'; 
     } else {
-        $conn->query("INSERT INTO customers (username, email, password) VALUES ('$username', '$email', '$password')");
+        $conn->query("INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')");
     }
-    header("Location: index.php");// this redirects the user to the main page after registering
+    header("Location: ../index.php");// this redirects the user to the main page after registering
     exit();
 }
 
@@ -31,9 +31,9 @@ if (isset($_POST['login'])) {
             $_SESSION['email'] = $user['email'];
 
             if ($user['role'] === 'admin') {
-                header("Location: admin.php");
+                header("Location: ../admin.php");
             } else {
-                header("Location: index.php");
+                header("Location: ../index.php");
             }
             exit();
         }
@@ -41,6 +41,6 @@ if (isset($_POST['login'])) {
 }
 $_SESSION['login_error'] = 'Incorrect email or password!';
 $_SESSION['active_form'] = 'login';
-header("Location: login.php");
+header("Location: ../login.php");
 exit();
 ?>

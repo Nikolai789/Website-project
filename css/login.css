@@ -91,11 +91,11 @@ p a:hover{
 }
 
 .error-message{
-    color: red;
+    color: #a42834;
     font-size: 16px;
     margin-bottom: 20px;
     padding: 12px;
-    background: white;
+    background: #f8d7da;
     border-radius: 6px;
     text-align: center;
 }
