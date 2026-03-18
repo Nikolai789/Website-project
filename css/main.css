@@ -1,82 +1,26 @@
-/*Main css stuff*/
-main{
-    padding: 20px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-column-gap: 30px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-main .section-title{
-    font-size: 22px;
-    margin-bottom: 30px;
-
-}
-
-main .left{
-    border-right: thin solid #d4d4d4;
-    padding-right: 20px;
-}
-main .left a{
-    display: block;
-    text-decoration: none;
-    color: #555;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-main .left a:hover{
-    text-decoration: underline;
-}
-
-main .right{/*Keeping code empty for future styles*/}
-main .right .product{
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 50px;
-}   
-
-main .right .product-left img{
-    height: 150px;
-    display: block;
-    margin: 0 auto;
-}
-
-main .right .name a{
-    font-weight: bold;
-    font-size: 18px;
-    text-decoration: none;
-    color: #555;
-    line-height: 26px;
-}
-
-main .right .name a:hover{
-    text-decoration: underline;
-}
-
-main .right .description{
-    margin-top: 10px    ;
-}
-
-main .right .price-row{
+main .product-container .product-categories {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
+    justify-content: space-evenly;
+    margin: 15px;
 }
 
-main .right .price {
-    font-size: 24px;
-    margin-top: 0px;
-    color: darkred;
+main .product-container .product-categories a{
+    font-size: 18px;
+    text-decoration: none;
+    color: #555; 
+    padding: 15px 35px;
+    transition: background-color 0.3s ,color 0.3s;
 }
 
-main .right .stock{
-    font-size: 22px;
-    color: #888;
+main .product-container .product-categories a:hover{
+    background-color: #3f77b7;
+    color: white;
+    border-radius: 3px;
 }
 
-main .right .stock .yellow{
-    color: rgb(119, 119, 28);
+main hr{
+    margin: 0;
+    background-color: #555;
+    height: 8px;
 }
 
