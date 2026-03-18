@@ -15,7 +15,7 @@ if (isset($_POST['register'])) { // this checks if the register button is clicke
     } else {
         $conn->query("INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')");
     }
-    header("Location: ../index.php");// this redirects the user to the main page after registering
+    header("Location: ../login.php");// this redirects the user to the main page after registering
     exit();
 }
 
@@ -30,7 +30,7 @@ if (isset($_POST['login'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
 
-            if ($user['role'] === 'admin') {
+            if ($user['user_role'] === 'admin') {
                 header("Location: ../admin.php");
             } else {
                 header("Location: ../index.php");
