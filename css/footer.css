@@ -1,0 +1,128 @@
+.footer {
+    position: relative;
+    padding: 20px;
+    background-image: url(../Assets/add_on_images/Adobe_Express_file.jpg);
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    /* DARK + VIGNETTE COMBINED */
+    background: radial-gradient(
+        circle at center,
+        rgba(0,0,0,.5) 0%,
+        rgba(0,0,0,1) 60%,
+        rgba(0,0,0,1.5) 100%
+    );
+
+    z-index: 0;
+}
+
+.footer * {
+    position: relative;
+    z-index: 1;
+}
+
+.footer-left,
+.footer-right {
+    flex: 1;
+}
+
+/* TOP SECTION */
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch; /* THIS is key */
+}
+
+/* LEFT */
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    color: white;
+    text-align: center;
+}
+
+.footer-item p {
+    margin-bottom: 5px;
+    color: white;
+}
+
+/* BORDERLESS BUTTON */
+.footer-btn {
+    text-decoration: none;
+    color: #3f77b7;
+    font-weight: bold;
+    padding: 5px 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    position: relative;
+}
+
+/* underline hover effect */
+.footer-btn::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: rgb(255, 255, 255);
+    transition: 0.3s;
+}
+
+.footer-btn:hover::after {
+    width: 100%;
+}
+
+/* DIVIDER */
+.footer-divider {
+    width: 1px;
+    background: rgb(255, 255, 255);
+    align-self: stretch; /* makes it full height of container */
+}
+
+/* RIGHT */
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* vertical center */
+    align-items: center;       /* horizontal center */
+    text-align: center;
+    height: 100%;
+    color: white;
+}
+
+.follow-text {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* SOCIAL ICONS */
+.social-icons img {
+    width: 75px;   /* adjust size */
+    height: 75px;
+    object-fit: contain;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+/* hover effect 🔥 */
+.social-icons img:hover {
+    transform: scale(1.2);
+    opacity: 0.7;
+}
+
+/* BOTTOM */
+.footer-bottom {
+    margin-top: 30px;
+    border-top: 1px solid rgb(255, 255, 255);
+    padding-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+}

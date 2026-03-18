@@ -1,7 +1,7 @@
     <?php 
-    $image_folder = 'header_images/';
+    $image_folder = 'Assets/Header_Images/';
     $images = glob($image_folder . "*.{jpg,jpeg,png,webp}", GLOB_BRACE); //Ma check ang images that have different file extensions
-    if (empty( $images )) {$images = ['header_images/default-bg.jpg'];} //kuntahayg mawala ang images sa folder
+    if (empty( $images )) {$images = ['Assets/Header_Images/default-bg.jpg'];} //kuntahayg mawala ang images sa folder
 
     $total_images = count($images); //count pila kabuok images
     $time_per_slide = 5; //pila ka seconds mo stay sa screen

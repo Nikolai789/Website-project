@@ -6,6 +6,6 @@
     <title>Checkout</title>
 </head>
 <body>
-    <h1 style="color: #5f862c;">Checkout Area</h1>
+    <h1 style="color: #3f77b7;">Checkout Area</h1>
 </body>
 </html>

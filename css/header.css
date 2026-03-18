@@ -1,5 +1,3 @@
-/*header and stuff rules */
-
 header{
     position: relative;
     text-align: center;
@@ -44,7 +42,7 @@ header{
 }
 
 header .Welcome{
-    color: #5f862c;
+    color: #5c9de7;
 }
 
 header .subtitle{

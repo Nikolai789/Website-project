@@ -1,3 +1,13 @@
+<?php
+if (isset($_GET['status'])) {
+    if ($_GET['status'] == 'success') {
+        echo "<p style='color:green; text-align:center; font-weight:bold;'>✅ Your message was sent successfully!</p>";
+    } elseif ($_GET['status'] == 'error') {
+        echo "<p style='color:red; text-align:center; font-weight:bold;'>❌ Oops! Something went wrong. Please try again.</p>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +19,9 @@
     <meta name="keywords" content= "mouse, keyboards, headphones"> 
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/navigation.css">
     <title>Periph</title>
 
 </head>
@@ -24,7 +37,7 @@
         <hr>
 
         <h2>Contact Form</h2>
-        <form action="contact.php" method="post">
+        <form action="send_email.php" method="post">
             <label for="name">Name:</label><br>
             <input type="text" id="name" name="name" required><br><br>
 
@@ -43,18 +56,7 @@
             <p><strong>Phone:</strong> +1 234 567 890</p>
             <p><strong>Address:</strong> 123 Main Street, Anytown, USA</p>
         </div>
-
-        <div class="Follow_us">
-            <h2>Follow Us</h2>
-            <p>Stay connected with us on social media:</p>
-            <ul>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Instagram</a></li>
-            </ul>
-        </div>
     </main>
-    
     <?php include "includes/footer.php" ?>
 
     <script>src="javascript/script.js"</script>
