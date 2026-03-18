@@ -9,6 +9,9 @@
     <meta name="keywords" content= "mouse, keyboards, headphones"> 
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/about_us.css">
+    <link rel="stylesheet" href="css/navigation.css">
     <title>Periph</title>
     
 
@@ -45,7 +48,6 @@
             <h2>Why Choose Us?</h2>
             <p>At GearTech, we are committed to delivering exceptional products and services. Our extensive selection, competitive pricing, and dedicated customer support make us the ideal choice for all your gadget peripheral needs.</p>
         </div>
-        <hr class="hr_bot">
 
     </main>
     

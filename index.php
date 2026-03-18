@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="css/header.css">
 
     <link rel="stylesheet" href="css/main.css">
+
+    <link rel="stylesheet" href="css/footer.css">
+
+    <link rel="stylesheet" href="css/navigation.css">
+
+    <link rel="stylesheet" href="css/navigation2.css">
     <title>Periph</title>
 
 </head>
@@ -33,7 +39,7 @@
             <div class="section-title">Products</div>
             <div class="product">
                 <div class="product-left">
-                    <img src="product_images/Mouse.webp" alt="Office Mouse" class="product-img">
+                    <img src="Assets/Product_Images/Mouse.webp" alt="Office Mouse" class="product-img">
                 </div>
                 <div class="product-right">
                     <p class="name">

@@ -1,0 +1,39 @@
+.navbar{
+    background-image: url(../Assets/add_on_images/Adobe_Express_file2.jpg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 5px 5px rgba(0,0,0, 0.15);
+    background-color: var(--bg-color);
+    transition: 0.3s;
+    padding: 15px 30px;
+}
+
+nav .brand{
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+nav .green-text{
+    color:#3f77b7;
+}
+
+nav a{
+    text-decoration: none;
+    margin: 0px 10px;
+    display: inline-block;
+    padding: 10px 35px;
+    transition: background-color 0.3s ,color 0.3s;
+    color: rgb(255, 255, 255);
+}
+
+nav a:hover, nav a.active{
+    background: #3f77b7;
+    color: white;
+    border-radius: 3px;
+}
+
+.registerlogin a {
+    margin-left: auto;
+    color: white;
+}
