@@ -1,3 +1,7 @@
+main{
+    background-color: rgb(5, 35, 63);
+}
+
 main .product-container .product-categories {
     display: flex;
     justify-content: space-evenly;
@@ -46,7 +50,7 @@ main .product-items .products{
 
 main .product-items .products .product-img {
     width: 100%;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1/1;
     object-fit: contain;        
     background-color: #f0f0f0;
     object-position: center;
@@ -72,5 +76,15 @@ main .product-items .products .stocks{
 main .product-items .products .stocks span{
     font-weight: bold;
     font-size: 18px;
-    color: yellow;
+    color: darkgoldenrod;
+}
+
+main .product-items .products a{
+    color: black;
+    text-decoration: none;
+}
+
+main .product-items .products:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }

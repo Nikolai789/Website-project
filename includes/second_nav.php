@@ -14,7 +14,7 @@
             </div>
 
             <a class="cart" href="check-out/checkout.php">🛒</a>
-            <!-- just an idea. not official -->
+            
         </div>
     
         <hr class="greenhr">

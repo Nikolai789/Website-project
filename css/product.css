@@ -1,0 +1,59 @@
+main{
+    background-color: rgb(5, 35, 63);
+}
+main .container{
+    display: block;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 32px;
+    margin: 40px;
+    background-color: white;
+}
+
+main .product-detail{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    padding: 16px;
+}
+
+main .product-detail img{
+    width: 400px;
+    height: 400px;
+    object-fit: contain;
+}
+
+main .product-detail .product-info{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+main .product-detail .product-info .price{
+    font-size: 24px;
+    font-weight: bold;
+    color: darkred;
+}
+
+main .product-detail .product-info .description{
+    line-height: 1.5;
+    font-size: 18px;
+    color: darkblue;
+}
+
+main .product-detail .product-info .stocks{
+    font-size: 22px;
+    font-weight: bold;
+}
+
+main .product-detail .product-info .stocks span{
+    font-size: 22px;
+    font-weight: bold;
+    color: darkgoldenrod;
+}
+
+main .product-detail .product-info .category{
+    font-size: 22px;
+    font-weight: bold;
+
+}

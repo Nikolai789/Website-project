@@ -26,7 +26,7 @@
     <?php include "includes/nav.php" ?>
     <?php include "includes/second_nav.php" ?>
     <?php include "includes/header.php" ?>
- 
+    <?php include "configurations/config.php"; ?>
 
     <main>
         <div class="product-container">
@@ -37,20 +37,23 @@
             </div>
                 <hr>
             <div class="product-items">
-                <div class="products"> 
-                    <a>
-                       <img src="Assets/product_images/Mouse.webp" alt="Office Mouse" class="product-img">
+                <?php
+                    $result = $conn->query("SELECT * FROM products");
 
-                        <p class="name">Logitech M331</p>
+                    while ($product = $result->fetch_assoc()): ?>
 
-                        <p class="price"> ₱930.00 </p>
+                    <div class="products">
+                        <a href="product.php?id=<?= $product['product_id'] ?>">
+                            <img src="Assets/product_images/<?= htmlspecialchars($product['image']) ?>"
+                            alt="<?= htmlspecialchars($product['name']) ?>"
+                            class="product-img">
+                            <p class="name"><?= htmlspecialchars($product['name']) ?></p>
+                            <p class="price">₱<?= number_format($product['price'], 2) ?></p>
+                            <p class="stocks">Stock: <span><?= $product['stock'] ?></span></p>
+                        </a>
+                    </div>
 
-                        <p class="stocks">Stock: <span>1</span></p>
-                    </a>
-                </div>
-            
-                
-                
+                <?php endwhile; ?>
             </div>
 
         </div>
