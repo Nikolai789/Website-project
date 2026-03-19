@@ -37,10 +37,19 @@
             </div>
                 <hr>
             <div class="product-items">
-                <div class="product-img">
-                    <img src="Assets/product_images/Mouse.webp" alt="Office Mouse" class="product-mouse">
-                </div>
+                <div class="products"> 
+                    <a>
+                       <img src="Assets/product_images/Mouse.webp" alt="Office Mouse" class="product-img">
 
+                        <p class="name">Logitech M331</p>
+
+                        <p class="price"> ₱930.00 </p>
+
+                        <p class="stocks">Stock: <span>1</span></p>
+                    </a>
+                </div>
+            
+                
                 
             </div>
 
