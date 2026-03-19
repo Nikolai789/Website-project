@@ -7,6 +7,7 @@ main .container{
     padding: 32px;
     margin: 40px;
     background-color: white;
+    border-radius: 10px;
 }
 
 main .product-detail{
@@ -21,6 +22,8 @@ main .product-detail img{
     width: 400px;
     height: 400px;
     object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 main .product-detail .product-info{
@@ -56,4 +59,23 @@ main .product-detail .product-info .category{
     font-size: 22px;
     font-weight: bold;
 
+}
+
+main .product-detail .product-info button{
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: rgb(139, 0, 0);
+    color: white;
+    border: none;
+    transition: background-color 0.3s ,transform 0.3s,color 0.3s;
+    border-radius: 4px;
+}
+
+main .product-detail .product-info button:hover{
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    background-color: #5c9de7;
+    color: black; 
 }
