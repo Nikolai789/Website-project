@@ -29,36 +29,21 @@
  
 
     <main>
-        <div class="left">
-            <div class="section-title">Product Categories</div>
-            <a href="">Mouse</a>
-            <a href="">Keyboard</a>
-        </div>
-
-        <div class="right">
-            <div class="section-title">Products</div>
-            <div class="product">
-                <div class="product-left">
-                    <img src="Assets/Product_Images/Mouse.webp" alt="Office Mouse" class="product-img">
-                </div>
-                <div class="product-right">
-                    <p class="name">
-                        <a href="">Logitech M331</a>
-                    </p>
-
-                    <p class="description">The Logitech M331 Silent Plus is a wireless mouse engineered for those who prioritize a quiet, focused workspace without sacrificing performance. Designed with comfort and longevity in mind, it is an ideal companion for busy office environments, shared workspaces, or late-night creative sessions at home.</p>
-                    <div class="price-row">
-                        <p class="price">
-                            <span class="currency">₱</span>930.00 
-                        </p>
-
-                        <p class="stock">
-                            Stock: <span class="yellow">1</span>
-                        </p>
-                    </div>
-                    
-                </div>
+        <div class="product-container">
+            <div class="product-categories">
+                <a href="">Mouse</a>
+                <a href="">Keyboard</a>
+                <a href="">Headset</a>
             </div>
+                <hr>
+            <div class="product-items">
+                <div class="product-img">
+                    <img src="Assets/product_images/Mouse.webp" alt="Office Mouse" class="product-mouse">
+                </div>
+
+                
+            </div>
+
         </div>
     </main>
     
