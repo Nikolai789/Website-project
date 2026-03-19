@@ -4,12 +4,42 @@ include "configurations/config.php";
 $id = $_GET['id'] ?? null;
 if (!$id) { header("Location: index.php"); exit; }
 
-$stmt = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
+$stmt = $conn->prepare("
+    SELECT
+        p.*,
+        (
+            SELECT pi.image
+            FROM product_images pi
+            WHERE pi.product_id = p.product_id
+            ORDER BY pi.is_primary DESC, pi.image_id ASC
+            LIMIT 1
+        ) AS image_blob
+    FROM products p
+    WHERE p.product_id = ?
+");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $product = $stmt->get_result()->fetch_assoc();
 
 if (!$product) { echo "Product not found."; exit; }
+
+/**
+ * Convert an image BLOB to a `data:` URI so it can be displayed in <img src="...">.
+ * Note: your schema stores only the raw bytes (no mime type column), so we infer mime from the buffer.
+ */
+function blobToDataUri(?string $blob): ?string {
+    if (empty($blob)) return null;
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime = $finfo->buffer($blob);
+    if (empty($mime)) {
+        $mime = "image/jpeg";
+    }
+
+    return "data:" . $mime . ";base64," . base64_encode($blob);
+}
+
+$imgSrc = blobToDataUri($product['image_blob'] ?? null);
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +60,12 @@ if (!$product) { echo "Product not found."; exit; }
     <main>
         <div class="container">
             <div class="product-detail">
-                <img src="Assets/product_images/<?= htmlspecialchars($product['image']) ?>"
-                alt="<?= htmlspecialchars($product['name']) ?>">
+                <?php if ($imgSrc): ?>
+                    <img
+                        src="<?= $imgSrc ?>"
+                        alt="<?= htmlspecialchars($product['name']) ?>"
+                    >
+                <?php endif; ?>
                 <div class="product-info">
                     <h1><?= htmlspecialchars($product['name']) ?></h1>
                     <p class="price">₱<?= number_format($product['price'], 2) ?></p>

@@ -28,6 +28,25 @@
     <?php include "includes/header.php" ?>
     <?php include "configurations/config.php"; ?>
 
+    <?php
+        /**
+         * Convert an image BLOB to a `data:` URI so it can be displayed in <img src="...">.
+         * Note: your schema stores only the raw bytes (no mime type column), so we infer mime from the buffer.
+         */
+        function blobToDataUri(?string $blob): ?string {
+            if (empty($blob)) return null;
+
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mime = $finfo->buffer($blob);
+            if (empty($mime)) {
+                // Fallback; most product images are jpg/png anyway.
+                $mime = "image/jpeg";
+            }
+
+            return "data:" . $mime . ";base64," . base64_encode($blob);
+        }
+    ?>
+
     <main>
         <div class="product-container">
             <div class="product-categories">
@@ -38,15 +57,33 @@
                 <hr>
             <div class="product-items">
                 <?php
-                    $result = $conn->query("SELECT * FROM products");
+                    // Pull one image per product from the BLOB table.
+                    // Prefer `is_primary=1`, otherwise take the first image by `image_id`.
+                    $result = $conn->query("
+                        SELECT
+                            p.*,
+                            (
+                                SELECT pi.image
+                                FROM product_images pi
+                                WHERE pi.product_id = p.product_id
+                                ORDER BY pi.is_primary DESC, pi.image_id ASC
+                                LIMIT 1
+                            ) AS image_blob
+                        FROM products p
+                    ");
 
                     while ($product = $result->fetch_assoc()): ?>
 
                     <div class="products">
                         <a href="product.php?id=<?= $product['product_id'] ?>">
-                            <img src="Assets/product_images/<?= htmlspecialchars($product['image']) ?>"
-                            alt="<?= htmlspecialchars($product['name']) ?>"
-                            class="product-img">
+                            <?php $imgSrc = blobToDataUri($product['image_blob'] ?? null); ?>
+                            <?php if ($imgSrc): ?>
+                                <img
+                                    src="<?= $imgSrc ?>"
+                                    alt="<?= htmlspecialchars($product['name']) ?>"
+                                    class="product-img"
+                                >
+                            <?php endif; ?>
                             <p class="name"><?= htmlspecialchars($product['name']) ?></p>
                             <p class="price">₱<?= number_format($product['price'], 2) ?></p>
                             <p class="stocks">Stock: <span><?= $product['stock'] ?></span></p>
