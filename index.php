@@ -45,34 +45,49 @@
 
             return "data:" . $mime . ";base64," . base64_encode($blob);
         }
+
+        $category = $_GET['category'] ?? null;
+
+    if ($category) {
+        $stmt = $conn->prepare("
+            SELECT p.*,
+                (
+                    SELECT pi.image FROM product_images pi
+                    WHERE pi.product_id = p.product_id
+                    ORDER BY pi.is_primary DESC, pi.image_id ASC
+                    LIMIT 1
+                ) AS image_blob
+            FROM products p
+            WHERE p.category = ?
+        ");
+        $stmt->bind_param("s", $category);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    } else {
+        $result = $conn->query("
+            SELECT p.*,
+                (
+                    SELECT pi.image FROM product_images pi
+                    WHERE pi.product_id = p.product_id
+                    ORDER BY pi.is_primary DESC, pi.image_id ASC
+                    LIMIT 1
+                ) AS image_blob
+            FROM products p
+        ");
+    }
     ?>
 
     <main>
         <div class="product-container">
             <div class="product-categories">
-                <a href="">Mouse</a>
-                <a href="">Keyboard</a>
-                <a href="">Headset</a>
+                <a href="index.php">All</a>
+                <a href="index.php?category=Mouse">Mouse</a>
+                <a href="index.php?category=Keyboard">Keyboard</a>
+                <a href="index.php?category=Headphone">Headphone</a>
             </div>
-                <hr>
+            <hr>
             <div class="product-items">
-                <?php
-                    // Pull one image per product from the BLOB table.
-                    // Prefer `is_primary=1`, otherwise take the first image by `image_id`.
-                    $result = $conn->query("
-                        SELECT
-                            p.*,
-                            (
-                                SELECT pi.image
-                                FROM product_images pi
-                                WHERE pi.product_id = p.product_id
-                                ORDER BY pi.is_primary DESC, pi.image_id ASC
-                                LIMIT 1
-                            ) AS image_blob
-                        FROM products p
-                    ");
-
-                    while ($product = $result->fetch_assoc()): ?>
+                <?php while ($product = $result->fetch_assoc()): ?>
 
                     <div class="products">
                         <a href="product.php?id=<?= $product['product_id'] ?>">
