@@ -43,7 +43,7 @@ if ($searchQuery !== '') {
 }
 
 $whereSql = count($conditions) ? ' WHERE ' . implode(' AND ', $conditions) : '';
-$productsResult = $conn->query("SELECT name, category, stock, price, description FROM products{$whereSql}{$orderBy}");
+$productsResult = $conn->query("SELECT product_id, name, category, stock, price, description FROM products{$whereSql}{$orderBy}");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,6 +67,11 @@ $productsResult = $conn->query("SELECT name, category, stock, price, description
         </header>
 
         <main class="admin-main">
+            <?php if (!empty($_GET['img_error'])): ?>
+                <p style="margin-top: 0; margin-bottom: 16px; color: #b00020;">
+                    Image upload failed: one or more images were too large. Please use smaller images.
+                </p>
+            <?php endif; ?>
             <section class="toolbar">
                 <button class="primary-btn" id="open-add-product">Add new product</button>
             </section>
@@ -116,6 +121,7 @@ $productsResult = $conn->query("SELECT name, category, stock, price, description
                             <th>stock</th>
                             <th>price</th>
                             <th>product description</th>
+                            <th style="width: 140px;">actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,11 +133,25 @@ $productsResult = $conn->query("SELECT name, category, stock, price, description
                                     <td><?= (int) $row['stock'] ?></td>
                                     <td>₱<?= number_format($row['price'], 2) ?></td>
                                     <td><?= htmlspecialchars($row['description']) ?></td>
+                                    <td style="text-align: right;">
+                                        <button
+                                            type="button"
+                                            class="secondary-btn edit-product-btn"
+                                            data-product-id="<?= (int) $row['product_id'] ?>"
+                                            data-name="<?= htmlspecialchars($row['name'] ?? '', ENT_QUOTES) ?>"
+                                            data-category="<?= htmlspecialchars($row['category'] ?? '', ENT_QUOTES) ?>"
+                                            data-stock="<?= (int) ($row['stock'] ?? 0) ?>"
+                                            data-price="<?= htmlspecialchars((string) ($row['price'] ?? 0), ENT_QUOTES) ?>"
+                                            data-description="<?= htmlspecialchars($row['description'] ?? '', ENT_QUOTES) ?>"
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" style="text-align: center; color: #555;">No products found.</td>
+                                <td colspan="6" style="text-align: center; color: #555;">No products found.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -207,6 +227,88 @@ $productsResult = $conn->query("SELECT name, category, stock, price, description
         </div>
     </div>
 
+    <div class="modal-backdrop" id="edit-product-backdrop">
+        <div class="modal-panel">
+            <h2 class="modal-title">edit product</h2>
+            <form
+                id="edit-product-form"
+                class="add-product-form"
+                action="processes/update_product.php"
+                method="post"
+                enctype="multipart/form-data"
+            >
+                <input type="hidden" name="product_id" id="edit-product-id">
+
+                <input
+                    type="text"
+                    name="name"
+                    id="edit-product-name"
+                    class="input-block"
+                    placeholder="product name"
+                    required
+                >
+
+                <select
+                    name="category"
+                    id="edit-product-category"
+                    class="input-block"
+                    required
+                >
+                    <option value="" disabled selected>product category (keyboard, mouse, headphone)</option>
+                    <option value="Keyboard">Keyboard</option>
+                    <option value="Mouse">Mouse</option>
+                    <option value="Headphone">Headphone</option>
+                </select>
+
+                <div class="row-2col">
+                    <input
+                        type="number"
+                        name="price"
+                        id="edit-product-price"
+                        class="input-block"
+                        placeholder="price"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+                    <input
+                        type="number"
+                        name="stock"
+                        id="edit-product-stock"
+                        class="input-block"
+                        placeholder="stock"
+                        min="0"
+                        step="1"
+                        required
+                    >
+                </div>
+
+                <textarea
+                    name="description"
+                    id="edit-product-description"
+                    class="input-block textarea"
+                    placeholder="description"
+                    rows="4"
+                    required
+                ></textarea>
+
+                <label class="input-block file-label">
+                    <span>add images (optional)</span>
+                    <input type="file" id="edit-image-input" name="images[]" accept="image/*" multiple>
+                </label>
+
+                <input type="hidden" name="kept_image_ids" id="edit-kept-image-ids" value="">
+                <input type="hidden" name="images_loaded" id="edit-images-loaded" value="0">
+                <div class="image-preview-multiple" id="edit-image-preview" style="display: none;"></div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" id="close-edit-product">Cancel</button>
+                    <button type="submit" class="primary-btn">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function filterProductsTable(query) {
             const q = (query || '').toLowerCase().trim();
@@ -230,26 +332,181 @@ $productsResult = $conn->query("SELECT name, category, stock, price, description
         const openBtn = document.getElementById('open-add-product');
         const closeBtn = document.getElementById('close-add-product');
         const backdrop = document.getElementById('add-product-backdrop');
+        const editBackdrop = document.getElementById('edit-product-backdrop');
         const imageInput = document.getElementById('image-input');
         const imagePreview = document.getElementById('image-preview');
         const imagesDataTransfer = new DataTransfer();
 
-        function openModal() {
-            backdrop.classList.add('visible');
+        function openModal(targetBackdrop) {
+            targetBackdrop.classList.add('visible');
             document.body.classList.add('modal-open');
         }
 
-        function closeModal() {
-            backdrop.classList.remove('visible');
+        function closeModal(targetBackdrop) {
+            targetBackdrop.classList.remove('visible');
             document.body.classList.remove('modal-open');
         }
 
-        openBtn.addEventListener('click', openModal);
-        closeBtn.addEventListener('click', closeModal);
+        openBtn.addEventListener('click', () => openModal(backdrop));
+        closeBtn.addEventListener('click', () => closeModal(backdrop));
         backdrop.addEventListener('click', (event) => {
             if (event.target === backdrop) {
-                closeModal();
+                closeModal(backdrop);
             }
+        });
+
+        const closeEditBtn = document.getElementById('close-edit-product');
+        closeEditBtn.addEventListener('click', () => closeModal(editBackdrop));
+        editBackdrop.addEventListener('click', (event) => {
+            if (event.target === editBackdrop) {
+                closeModal(editBackdrop);
+            }
+        });
+
+        const editProductIdInput = document.getElementById('edit-product-id');
+        const editProductNameInput = document.getElementById('edit-product-name');
+        const editProductCategoryInput = document.getElementById('edit-product-category');
+        const editProductStockInput = document.getElementById('edit-product-stock');
+        const editProductPriceInput = document.getElementById('edit-product-price');
+        const editProductDescriptionInput = document.getElementById('edit-product-description');
+
+        const editImageInput = document.getElementById('edit-image-input');
+        const editImagePreview = document.getElementById('edit-image-preview');
+        const editKeptImageIdsInput = document.getElementById('edit-kept-image-ids');
+        const editImagesLoadedInput = document.getElementById('edit-images-loaded');
+
+        let editExistingImageIds = [];
+        let editImagesDataTransfer = new DataTransfer();
+
+        function setEditKeptImageIds(ids) {
+            editKeptImageIdsInput.value = (ids || []).join(',');
+        }
+
+        function updateEditPreviewVisibility() {
+            const hasExisting = editImagePreview.querySelectorAll('.edit-existing-thumb').length > 0;
+            const hasNew = editImagePreview.querySelectorAll('.edit-new-thumb').length > 0;
+            editImagePreview.style.display = hasExisting || hasNew ? 'flex' : 'none';
+        }
+
+        function resetEditImagesUI() {
+            editExistingImageIds = [];
+            setEditKeptImageIds([]);
+            editImagesLoadedInput.value = '0';
+
+            editImagesDataTransfer = new DataTransfer();
+            editImageInput.value = '';
+
+            editImagePreview.innerHTML = '';
+            editImagePreview.style.display = 'none';
+        }
+
+        function renderEditNewImages() {
+            // Remove old new-image thumbs and re-render from current DataTransfer state.
+            editImagePreview.querySelectorAll('.edit-new-thumb').forEach((n) => n.remove());
+
+            const newFiles = Array.from(editImagesDataTransfer.files);
+            newFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'image-thumb edit-new-thumb';
+                    wrapper.dataset.index = String(index);
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = file.name;
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.className = 'image-thumb-remove';
+                    removeBtn.textContent = '×';
+                    removeBtn.addEventListener('click', () => {
+                        const currentFiles = Array.from(editImagesDataTransfer.files);
+                        const dt = new DataTransfer();
+                        currentFiles.forEach((f, i) => {
+                            if (i !== index) dt.items.add(f);
+                        });
+                        editImagesDataTransfer = dt;
+                        editImageInput.files = editImagesDataTransfer.files;
+                        renderEditNewImages();
+                        updateEditPreviewVisibility();
+                    });
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(removeBtn);
+                    editImagePreview.appendChild(wrapper);
+                    updateEditPreviewVisibility();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        editImageInput.addEventListener('change', (event) => {
+            const newFiles = Array.from(event.target.files || []);
+            newFiles.forEach((file) => editImagesDataTransfer.items.add(file));
+
+            editImageInput.files = editImagesDataTransfer.files;
+            renderEditNewImages();
+            updateEditPreviewVisibility();
+        });
+
+        function openEditModalFromButton(button) {
+            editProductIdInput.value = button.dataset.productId || '';
+            editProductNameInput.value = button.dataset.name || '';
+            editProductCategoryInput.value = button.dataset.category || '';
+            editProductStockInput.value = button.dataset.stock || 0;
+            editProductPriceInput.value = button.dataset.price || 0;
+            editProductDescriptionInput.value = button.dataset.description || '';
+
+            resetEditImagesUI();
+            openModal(editBackdrop);
+
+            const productId = button.dataset.productId;
+            if (!productId) return;
+
+            fetch(`processes/get_product_images.php?product_id=${encodeURIComponent(productId)}`)
+                .then((r) => r.json())
+                .then((data) => {
+                    const images = Array.isArray(data.images) ? data.images : [];
+                    editExistingImageIds = images.map((img) => (img.image_id ? String(img.image_id) : '')).filter(Boolean);
+                    setEditKeptImageIds(editExistingImageIds);
+                    editImagesLoadedInput.value = '1';
+
+                    images.forEach((img) => {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'image-thumb edit-existing-thumb';
+                        wrapper.dataset.imageId = String(img.image_id || '');
+
+                        const imgEl = document.createElement('img');
+                        imgEl.src = img.data_uri || '';
+                        imgEl.alt = 'product image';
+
+                        const removeBtn = document.createElement('button');
+                        removeBtn.type = 'button';
+                        removeBtn.className = 'image-thumb-remove';
+                        removeBtn.textContent = '×';
+                        removeBtn.addEventListener('click', () => {
+                            const idToRemove = String(wrapper.dataset.imageId || '');
+                            wrapper.remove();
+                            editExistingImageIds = editExistingImageIds.filter((id) => id !== idToRemove);
+                            setEditKeptImageIds(editExistingImageIds);
+                            updateEditPreviewVisibility();
+                        });
+
+                        wrapper.appendChild(imgEl);
+                        wrapper.appendChild(removeBtn);
+                        editImagePreview.appendChild(wrapper);
+                    });
+
+                    updateEditPreviewVisibility();
+                })
+                .catch(() => {
+                    // If fetching fails, keep the edit modal usable for text fields.
+                });
+        }
+
+        document.querySelectorAll('.edit-product-btn').forEach((btn) => {
+            btn.addEventListener('click', () => openEditModalFromButton(btn));
         });
 
         function renderImagePreview() {
