@@ -19,11 +19,19 @@ if (!in_array($priceSort, $allowedPriceSort, true)) {
     $priceSort = '';
 }
 
+$allowedDateSort = ['asc', 'desc'];
+$dateSort = $_GET['date_sort'] ?? '';
+if (!in_array($dateSort, $allowedDateSort, true)) {
+    $dateSort = '';
+}
+
 $orderBy = '';
 if ($priceSort !== '') {
     $orderBy = $priceSort === 'asc' ? ' ORDER BY price ASC' : ' ORDER BY price DESC';
 } elseif ($stockSort !== '') {
     $orderBy = $stockSort === 'asc' ? ' ORDER BY stock ASC' : ' ORDER BY stock DESC';
+} elseif ($dateSort !== '') {
+    $orderBy = $dateSort === 'asc' ? ' ORDER BY date_added ASC' : ' ORDER BY date_added DESC';
 }
 
 $searchQuery = trim($_GET['q'] ?? '');
@@ -43,7 +51,7 @@ if ($searchQuery !== '') {
 }
 
 $whereSql = count($conditions) ? ' WHERE ' . implode(' AND ', $conditions) : '';
-$productsResult = $conn->query("SELECT product_id, name, category, stock, price, description FROM products{$whereSql}{$orderBy}");
+$productsResult = $conn->query("SELECT product_id, name, category, stock, price, date_added, description FROM products{$whereSql}{$orderBy}");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,6 +104,11 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                             <option value="desc" <?= $priceSort === 'desc' ? 'selected' : '' ?>>Highest to lowest</option>
                             <option value="asc" <?= $priceSort === 'asc' ? 'selected' : '' ?>>Lowest to highest</option>
                         </select>
+                        <select name="date_sort" class="filter-select" onchange="this.form.submit()">
+                            <option value="" <?= $dateSort === '' ? 'selected' : '' ?>>Date: default</option>
+                            <option value="desc" <?= $dateSort === 'desc' ? 'selected' : '' ?>>Newest first</option>
+                            <option value="asc" <?= $dateSort === 'asc' ? 'selected' : '' ?>>Oldest first</option>
+                        </select>
                     </form>
                 </div>
                 <div class="filters-right">
@@ -120,6 +133,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                             <th>category</th>
                             <th>stock</th>
                             <th>price</th>
+                            <th>date added</th>
                             <th>product description</th>
                             <th style="width: 140px;">actions</th>
                         </tr>
@@ -132,6 +146,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                                     <td><?= htmlspecialchars($row['category']) ?></td>
                                     <td><?= (int) $row['stock'] ?></td>
                                     <td>₱<?= number_format($row['price'], 2) ?></td>
+                                    <td><?= date('M j, Y', strtotime($row['date_added'])) ?></td>
                                     <td><?= htmlspecialchars($row['description']) ?></td>
                                     <td style="text-align: right; white-space: nowrap; display: flex; justify-content: flex-end; gap: 6px; align-items: center;">
                                         <button

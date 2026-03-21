@@ -9,10 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stock = $_POST['stock'] ?? 0;
     $description = $_POST['description'] ?? '';
 
-    $stmt = $conn->prepare(
-        "INSERT INTO products (name, description, price, stock, category)
-         VALUES (?, ?, ?, ?, ?)"
-    );
+    $stmt = $conn->prepare('INSERT INTO products (name, description, price, stock, category) VALUES (?, ?, ?, ?, ?)');
 
     $stmt->bind_param(
         "ssdis",
