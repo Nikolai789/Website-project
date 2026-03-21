@@ -484,3 +484,22 @@ body {
     border-color: #c8d0e7;
     color: #374151;
 }
+
+.danger-btn {
+    background: transparent;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 9px 18px;
+    font-size: 13.5px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.danger-btn:hover {
+    background: #fef2f2;
+    border-color: #f87171;
+    color: #b91c1c;
+}

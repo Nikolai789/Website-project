@@ -133,7 +133,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                                     <td><?= (int) $row['stock'] ?></td>
                                     <td>₱<?= number_format($row['price'], 2) ?></td>
                                     <td><?= htmlspecialchars($row['description']) ?></td>
-                                    <td style="text-align: right;">
+                                    <td style="text-align: right; white-space: nowrap; display: flex; justify-content: flex-end; gap: 6px; align-items: center;">
                                         <button
                                             type="button"
                                             class="secondary-btn edit-product-btn"
@@ -145,6 +145,14 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                                             data-description="<?= htmlspecialchars($row['description'] ?? '', ENT_QUOTES) ?>"
                                         >
                                             Edit
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="danger-btn delete-product-btn"
+                                            data-product-id="<?= (int) $row['product_id'] ?>"
+                                            data-name="<?= htmlspecialchars($row['name'] ?? '', ENT_QUOTES) ?>"
+                                        >
+                                            Delete
                                         </button>
                                     </td>
                                 </tr>
@@ -304,6 +312,22 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                 <div class="modal-actions">
                     <button type="button" class="secondary-btn" id="close-edit-product">Cancel</button>
                     <button type="submit" class="primary-btn">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="delete-product-backdrop">
+        <div class="modal-panel" style="max-width: 380px;">
+            <h2 class="modal-title">delete product</h2>
+            <p id="delete-confirm-text" style="text-align: center; color: #6b7280; font-size: 14px; margin: 0 0 24px;">
+                Are you sure you want to delete this product?
+            </p>
+            <form action="processes/delete_product.php" method="post">
+                <input type="hidden" name="product_id" id="delete-product-id">
+                <div class="modal-actions" style="justify-content: center;">
+                    <button type="button" class="secondary-btn" id="close-delete-product">Cancel</button>
+                    <button type="submit" class="danger-btn">Delete</button>
                 </div>
             </form>
         </div>
@@ -565,6 +589,26 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
 
             imageInput.files = imagesDataTransfer.files;
             renderImagePreview();
+        });
+
+        // script behaviour of delete button
+        const deleteBackdrop = document.getElementById('delete-product-backdrop');
+        const closeDeleteBtn = document.getElementById('close-delete-product');
+        const deleteProductIdInput = document.getElementById('delete-product-id');
+        const deleteConfirmText = document.getElementById('delete-confirm-text');
+
+        closeDeleteBtn.addEventListener('click', () => closeModal(deleteBackdrop));
+        deleteBackdrop.addEventListener('click', (event) => {
+            if (event.target === deleteBackdrop) closeModal(deleteBackdrop);
+        });
+
+        document.querySelectorAll('.delete-product-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                deleteProductIdInput.value = btn.dataset.productId;
+                deleteConfirmText.textContent =
+                    `Are you sure you want to delete "${btn.dataset.name}"? This cannot be undone.`;
+                openModal(deleteBackdrop);
+            });
         });
     </script>
 </body>
