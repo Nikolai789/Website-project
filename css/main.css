@@ -6,11 +6,11 @@ main .product-container .product-categories {
     display: flex;
     justify-content: space-evenly;
     background-color: rgb(0, 0, 0);
-    padding: 15px;
+    padding: 7px;
 }
 
 main .product-container .product-categories a{
-    font-size: 18px;
+    font-size: 15px;
     text-decoration: none;
     color: #ffff; 
     padding: 15px 35px;
@@ -24,8 +24,8 @@ main .product-container .product-categories a:hover{
 
 main hr{
     margin: 0;
-    background-color: #555;
-    height: 8px;
+    background-color: #fefefe;
+    height: 1px;
 }
 
 main .product-items{

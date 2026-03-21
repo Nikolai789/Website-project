@@ -22,7 +22,7 @@ if (isset($_GET['status'])) {
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="css/navigation.css">
-    <title>Periph</title>
+    <title>Contact GearHub</title>
 
 </head>
 <body>

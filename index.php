@@ -59,12 +59,13 @@ if ($category) {
     <link rel="stylesheet" href="css/navigation.css">
     <link rel="stylesheet" href="css/navigation2.css">
 
-    <title>GearHub</title>
+    <title>GearHub Home</title>
 </head>
 <body>
     <?php include "includes/nav.php" ?>
-    <?php include "includes/second_nav.php" ?>
     <?php include "includes/header.php" ?>
+    <?php include "includes/second_nav.php" ?>
+
 
     <main>
         <div class="product-container">

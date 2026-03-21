@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/about_us.css">
     <link rel="stylesheet" href="css/navigation.css">
-    <title>Periph</title>
+    <title>About GearHub</title>
     
 
 </head>

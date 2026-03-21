@@ -1,5 +1,5 @@
 <nav>
-    <hr class="greenhr">
+    <hr class="navhr">
         <div class="nav2">
 
             <script>
