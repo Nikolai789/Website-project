@@ -88,3 +88,17 @@ main .product-items .products:hover{
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
+.product-img-placeholder {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: #e0e0e0;
+}
+
+.no-products {
+    color: #aaa;
+    font-size: 16px;
+    padding: 40px;
+    grid-column: 1 / -1;
+    text-align: center;
+}
