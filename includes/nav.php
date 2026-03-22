@@ -22,8 +22,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <div class = "registerlogin">
                 <?php if (!empty($_SESSION['username'])): ?>
-                    <a href="profile.php"><?= htmlspecialchars($_SESSION['username']) ?></a>
-                    <a href="logout.php">Logout</a>
+                    <a href="/Website/profile.php"><?= htmlspecialchars($_SESSION['username']) ?></a>
+                    <a href="/Website/logout.php">Logout</a>
                 <?php else: ?>
                     <a href="login.php">Login</a>
                 <?php endif; ?>

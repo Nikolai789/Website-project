@@ -14,7 +14,7 @@ if (!isset($_POST['update_profile'])) {
 }
 
 // ── Sanitize inputs ──
-$user_id      = $_SESSION['user_id'];
+$user_id      = (int) $_SESSION['user_id'];
 $username     = trim($_POST['username']      ?? '');
 $email        = trim($_POST['email']         ?? '');
 $cur_password = $_POST['current_password']   ?? '';
@@ -42,16 +42,14 @@ if (!empty($new_password)) {
         exit();
     }
 
-    if (strlen($new_password) < 6) {
-        $_SESSION['edit_error'] = 'New password must be at least 6 characters.';
-        header("Location: ../edit_profile.php");
-        exit();
-    }
-
     // Verify current password against DB
-    $res = $conn->query("SELECT password FROM users WHERE user_id = '$user_id'");
-    $row = $res->fetch_assoc();
-    if (!password_verify($cur_password, $row['password'])) {
+    $stmt = $conn->prepare("SELECT password FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$row || !password_verify($cur_password, $row['password'])) {
         $_SESSION['edit_error'] = 'Current password is incorrect.';
         header("Location: ../edit_profile.php");
         exit();
@@ -59,25 +57,25 @@ if (!empty($new_password)) {
 
     // Hash and update password
     $hashed = password_hash($new_password, PASSWORD_DEFAULT);
-    $conn->query("UPDATE users SET password = '$hashed' WHERE user_id = '$user_id'");
+    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
+    $stmt->bind_param("si", $hashed, $user_id);
+    $stmt->execute();
+    $stmt->close();
 }
 
 // ── Update username, email, address in DB ──
-$username = $conn->real_escape_string($username);
-$email    = $conn->real_escape_string($email);
-$address  = $conn->real_escape_string($address);
+$stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, address = ? WHERE user_id = ?");
+$stmt->bind_param("sssi", $username, $email, $address, $user_id);
+$stmt->execute();
 
-$conn->query("UPDATE users SET
-    username = '$username',
-    email    = '$email',
-    address  = '$address'
-    WHERE user_id = '$user_id'");
-
-if ($conn->affected_rows === -1) {
+if ($stmt->errno) {
+    $stmt->close();
     $_SESSION['edit_error'] = 'Something went wrong. Please try again.';
     header("Location: ../edit_profile.php");
     exit();
 }
+
+$stmt->close();
 
 // ── Update session to reflect changes ──
 $_SESSION['username'] = $username;
