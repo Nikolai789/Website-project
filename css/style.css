@@ -8,8 +8,23 @@ html, body {
 
 main {
     flex: 1;   /* take all available space */
+    animation: pageIn 0.35s ease both;
 }
 /* main body html rules */
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Page fade-out before leaving */
+body.leaving {
+  animation: pageOut 0.25s ease forwards;
+  pointer-events: none;
+}
+@keyframes pageOut {
+  to { opacity: 0; transform: translateY(-8px); }
+}
 
 *{
     margin: 0;
@@ -18,7 +33,6 @@ main {
 }
 
 body{
-    font-family: sans-serif;
     background-color: rgb(255, 255, 255);
     color: black;
     transition: 0.3s;

@@ -5,6 +5,12 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 ?>
 
+<head> 
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/logout_modal.css">
+</head>
+
     <nav>
         <header class = "navbar">
             <div class = "brand">Gear<span class="green-text">Hub</span></div>
@@ -23,4 +29,21 @@ if (session_status() === PHP_SESSION_NONE) {
                 <?php endif; ?>
             </div>
         </header>
+
+        <script>
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', e => {
+                    const href = link.getAttribute('href');
+                    // skip if same page, anchor link, or external
+                    if (!href || href.startsWith('#') || href.startsWith('http')) return;
+
+                    e.preventDefault();
+                    document.body.classList.add('leaving');
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 250); // match pageOut duration
+                });
+            });
+        </script>
     </nav>

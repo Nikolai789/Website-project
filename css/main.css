@@ -1,5 +1,9 @@
+* {
+    font-family: 'Exo 2', sans-serif;
+}
+
 main{
-    background-color: rgb(5, 35, 63);
+    background-color: rgb(255, 255, 255);
 }
 
 main .product-container .product-categories {

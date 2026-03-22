@@ -1,3 +1,7 @@
+* {
+    font-family: 'Exo 2', sans-serif;
+}
+
 header{
     position: relative;
     text-align: center;
@@ -14,6 +18,7 @@ header{
     z-index: 1;
     background-color: #333;
     border-bottom: 2px solid #5c9de7;
+    box-shadow: 0 0 10px rgba(0,200,255,0.5), 0 0 22px rgba(0,200,255,0.2); /* medium */
 }
 .header-slide{
     position: absolute;
@@ -39,14 +44,15 @@ header{
 .header-content {
     position: relative;
     z-index: 3; 
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
 }
 
 header .Welcome{
     line-height: 0px;
-    color: #5c9de7;
+    color: #ffffff;
+    text-shadow: 0 0 6px #007bff, 0 0 18px rgba(0, 98, 255, 0.7);
 }
 
 header .subtitle{
     margin-top: 20px;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.3);
 }

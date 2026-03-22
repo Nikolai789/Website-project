@@ -3,6 +3,7 @@ require_once __DIR__ . "/configurations/config.php";
 
 // Whitelist category to prevent arbitrary values hitting the DB
 $allowedCategories = ['Mouse', 'Keyboard', 'Headphone'];
+$search = trim($_GET['search'] ?? '');
 $category = $_GET['category'] ?? null;
 if ($category !== null && !in_array($category, $allowedCategories, true)) {
     $category = null;
@@ -33,11 +34,29 @@ $sql = "
             LIMIT 1
         ) AS image_blob
     FROM products p
+    WHERE 1=1
 ";
 
+// Build conditions
+$params = [];
+$types  = '';
+
 if ($category) {
-    $stmt = $conn->prepare($sql . " WHERE p.category = ?");
-    $stmt->bind_param("s", $category);
+    $sql .= " AND p.category = ?";
+    $types   .= 's';
+    $params[] = $category;
+}
+
+if ($search !== '') {
+    $sql .= " AND p.name LIKE ?";
+    $types   .= 's';
+    $like     = '%' . $search . '%';
+    $params[] = $like;
+}
+
+if (!empty($params)) {
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param($types, ...$params);
     $stmt->execute();
     $result = $stmt->get_result();
 } else {

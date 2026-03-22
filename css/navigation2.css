@@ -17,6 +17,7 @@
     font-size: 1.2rem;
     border-radius: 15px;
     text-decoration: none;
+    text-shadow: 0 0 8px rgba(0,200,255,0.5);   
 }
 
 /* search bar design*/
