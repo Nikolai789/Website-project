@@ -1,5 +1,10 @@
 <?php
 require_once __DIR__ . "/configurations/config.php";
+session_start();
+
+// Read and clear cart notice
+$cartNotice = $_SESSION['cart_notice'] ?? '';
+unset($_SESSION['cart_notice']);
 
 // Whitelist category to prevent arbitrary values hitting the DB
 $allowedCategories = ['Mouse', 'Keyboard', 'Headphone'];
@@ -85,6 +90,9 @@ if (!empty($params)) {
     <?php include "includes/header.php" ?>
     <?php include "includes/second_nav.php" ?>
 
+    <?php if (!empty($cartNotice)): ?>
+        <p class="msg msg-error"><?= htmlspecialchars($cartNotice) ?></p>
+    <?php endif; ?>
 
     <main>
         <div class="product-container">

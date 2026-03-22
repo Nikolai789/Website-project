@@ -28,12 +28,19 @@ $stmt->execute();
 $items = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
+// Empty cart — redirect to index with a message
 if (empty($items)) {
-    header("Location: ../cart.php");
+    $_SESSION['cart_notice'] = 'Your cart is empty. Add some products first!';
+    header("Location: ../index.php");
     exit;
 }
 
 $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $items));
+
+// Read and clear session messages
+$error   = $_SESSION['checkout_error']   ?? '';
+$success = $_SESSION['checkout_success'] ?? '';
+unset($_SESSION['checkout_error'], $_SESSION['checkout_success']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,8 +61,12 @@ $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $items));
             <div class="box">
                 <h1>Checkout</h1>
             </div>
-            <?php if (isset($_GET['error'])): ?>
-                <p style="color: red;"><?= htmlspecialchars($_GET['error']) ?></p>
+
+            <?php if (!empty($error)): ?>
+                <p class="msg msg-error"><?= htmlspecialchars($error) ?></p>
+            <?php endif; ?>
+            <?php if (!empty($success)): ?>
+                <p class="msg msg-success"><?= htmlspecialchars($success) ?></p>
             <?php endif; ?>
 
             <div class="checkout-wrapper">
@@ -68,31 +79,56 @@ $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $items));
                                     <th>Product</th>
                                     <th>Qty</th>
                                     <th>Subtotal</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($items as $item): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($item['name']) ?></td>
-                                    <td><?= $item['quantity'] ?></td>
+
+                                    <!-- Quantity update form -->
+                                    <td>
+                                        <form action="../processes/update_cart_item.php" method="POST" class="inline-form">
+                                            <input type="hidden" name="cart_item_id" value="<?= $item['cart_item_id'] ?>">
+                                            <input
+                                                type="number"
+                                                name="quantity"
+                                                value="<?= $item['quantity'] ?>"
+                                                min="1"
+                                                max="<?= $item['stock'] ?>"
+                                                class="qty-input"
+                                            >
+                                            <button type="submit" class="btn-update">Update</button>
+                                        </form>
+                                    </td>
+
                                     <td>₱<?= number_format($item['price'] * $item['quantity'], 2) ?></td>
+
+                                    <!-- Remove form -->
+                                    <td>
+                                        <form action="../processes/remove_cart_item.php" method="POST" class="inline-form">
+                                            <input type="hidden" name="cart_item_id" value="<?= $item['cart_item_id'] ?>">
+                                            <button type="submit" class="btn-remove">Remove</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="2"><strong>Total</strong></td>
+                                    <td colspan="3"><strong>Total</strong></td>
                                     <td><strong>₱<?= number_format($total, 2) ?></strong></td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-                </div>    
-                
+                </div>
+
                 <div class="checkout-form">
                     <div class="box">
                         <h2>Delivery Details</h2>
-                        <form action="process_checkout.php" method="POST">
+                        <form action="../processes/process_checkout.php" method="POST">
                             <label>Name</label>
                             <input type="text" value="<?= htmlspecialchars($user['username']) ?>" disabled>
 
@@ -109,11 +145,13 @@ $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $items));
 
                             <button type="submit">Place Order</button>
                         </form>
-                    </div>    
+                    </div>
                 </div>
 
             </div>
         </div>
     </main>
+
+    <?php include "../includes/footer.php" ?>
 </body>
 </html>

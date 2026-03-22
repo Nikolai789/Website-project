@@ -78,8 +78,7 @@ if (empty($_SESSION['username'])) {
                 <a href="logout.php" class="btn btn-ghost">Logout</a>
             </div>
  
-        </div>
- 
+        </div> 
     </main>
 </body>
 </html>
