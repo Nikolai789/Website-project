@@ -1,0 +1,104 @@
+main{
+    background-color: rgb(5, 35, 63);
+}
+
+main .product-container .product-categories {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: rgb(0, 0, 0);
+    padding: 7px;
+}
+
+main .product-container .product-categories a{
+    font-size: 15px;
+    text-decoration: none;
+    color: #ffff; 
+    padding: 15px 35px;
+    transition: background-color 0.3s ,color 0.3s;
+}
+
+main .product-container .product-categories a:hover{
+    background-color: #3f77b7;
+    border-radius: 3px;
+}
+
+main hr{
+    margin: 0;
+    background-color: #fefefe;
+    height: 1px;
+}
+
+main .product-items{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+    padding: 32px;
+}
+
+main .product-items .products{
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+main .product-items .products .product-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: contain;        
+    background-color: #f0f0f0;
+    object-position: center;
+    padding: 0;              
+}
+
+main .product-items .products .name{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+main .product-items .products .price{
+    font-weight: bold;
+    font-size: 18px;
+    color: darkred;
+}
+
+main .product-items .products .stocks{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+main .product-items .products .stocks span{
+    font-weight: bold;
+    font-size: 18px;
+    color: darkgoldenrod;
+}
+
+main .product-items .products a{
+    color: black;
+    text-decoration: none;
+}
+
+main .product-items .products:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.product-img-placeholder {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: #e0e0e0;
+}
+
+.no-products {
+    color: #aaa;
+    font-size: 16px;
+    padding: 40px;
+    grid-column: 1 / -1;
+    text-align: center;
+}

@@ -1,0 +1,40 @@
+.about_us {
+    background-color: white;
+    padding: 40px;
+    margin: 30px auto;
+    width: 80%;
+    text-align: center;
+    line-height: 50px;
+}
+
+.hr_bot {
+    border: none;
+    margin-bottom: -20px;
+    height: 2px;
+    background-color: black;
+}
+
+.Introduction, .Offers, .Why_choose_us, .Mission, .Our_team {
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    border-radius: 12px;
+    padding: 50px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    margin: 50px;
+    margin-top: -20px;
+    line-height: 40px;
+}
+
+.Introduction:hover, .Offers:hover, .Why_choose_us:hover, .Mission:hover, .Our_team:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35); 
+    color: white;
+    background-color: #3f77b7;
+}
+
+.Offers ul {
+    list-style-type: none;
+}
+
+.about_us > .top_hr {
+    color: black;
+}
