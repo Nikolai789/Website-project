@@ -1,10 +1,14 @@
+* {
+    font-family: 'Exo 2', sans-serif;
+}
+
 main{
     background-color: rgb(5, 35, 63);
 }
 main .container{
     display: block;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 32px;
+    padding: 50px;
     margin: 40px;
     background-color: white;
     border-radius: 10px;
@@ -15,7 +19,7 @@ main .product-detail{
     justify-content: center;
     align-items: flex-start;
     gap: 32px;
-    padding: 16px;
+    padding: 25px;
 }
 
 main .product-detail .product-info{

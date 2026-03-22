@@ -55,6 +55,7 @@
 .footer-btn {
     text-decoration: none;
     color: #3f77b7;
+    text-shadow: 0 0 8px rgba(0,200,255,0.6), 0 0 20px rgba(0,200,255,0.3);
     font-weight: bold;
     padding: 5px 0;
     border: none;
