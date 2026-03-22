@@ -9,8 +9,15 @@
             </script>
 
             <div class="search-bar">
-                <input type="text" placeholder="Search for products">
-                <span>🔍</span>
+                <form method="GET" action="index.php" style="display:flex; align-items:center;">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        placeholder="Search for products"
+                        value="<?= htmlspecialchars($_GET['search'] ?? '') ?>"
+                    >
+                    <button type="submit" style="background:none; border:none; cursor:pointer;"></button>
+                </form>
             </div>
 
             <a class="cart" href="check-out/checkout.php">🛒</a>
