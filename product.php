@@ -108,7 +108,11 @@ $imgSrcs = array_filter(array_map(
                     <p class="description"><?= nl2br(htmlspecialchars($product['description'])) ?></p>
                     <p class="stocks">Stock: <span><?= (int) $product['stock'] ?></span></p>
                     <p class="category">Category: <?= htmlspecialchars($product['category']) ?></p>
-                    <button>Add to Cart</button>
+
+                    <button id="add-to-cart-btn" data-product-id="<?= $product['product_id'] ?>">
+                        Add to Cart
+                    </button>
+                    <p id="cart-message" style="display:none; margin-top: 8px;"></p>
                 </div>
 
             </div>
@@ -126,6 +130,35 @@ $imgSrcs = array_filter(array_map(
             document.getElementById('main-image').src = images[current];
             document.getElementById('current-index').textContent = current + 1;
         }
+
+        document.getElementById('add-to-cart-btn').addEventListener('click', function () {
+        const productId = this.dataset.productId;
+        const btn = this;
+        btn.disabled = true;
+
+        fetch('add_to_cart.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `product_id=${productId}&quantity=1`
+        })
+        .then(res => res.json())
+        .then(data => {
+            const msg = document.getElementById('cart-message');
+            msg.textContent = data.message;
+            msg.style.display = 'block';
+            msg.style.color = data.success ? 'green' : 'red';
+
+            if (!data.success && data.message.includes('log in')) {
+                window.location.href = 'login.php';
+            }
+
+            if (!data.success) btn.disabled = false;
+        })
+        .catch(() => {
+            document.getElementById('cart-message').textContent = 'Something went wrong.';
+            btn.disabled = false;
+        });
+    });
     </script>
 </body>
 </html>

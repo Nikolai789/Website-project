@@ -1,6 +1,5 @@
 <?php
-
-session_start(); // this fucntion starts the session which allows us to store certain data that can access across pages during user session
+session_start();
 require_once __DIR__ . "/../configurations/config.php"; // this contains the configuration to connect to the database
 
 if (isset($_POST['register'])) { // this checks if the register button is clicked
@@ -27,6 +26,7 @@ if (isset($_POST['login'])) {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) { // this checks if the password is correct
+            $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
 
