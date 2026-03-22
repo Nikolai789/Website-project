@@ -108,7 +108,11 @@ $imgSrcs = array_filter(array_map(
                     <p class="description"><?= nl2br(htmlspecialchars($product['description'])) ?></p>
                     <p class="stocks">Stock: <span><?= (int) $product['stock'] ?></span></p>
                     <p class="category">Category: <?= htmlspecialchars($product['category']) ?></p>
-
+                    <div class="quantity-controls">
+                     <button type="button" onclick="changeQty(-1)">−</button>
+                      <input type="number" id="quantity" value="1" min="1" max="<?= (int) $product['stock'] ?>">
+                      <button type="button" onclick="changeQty(1)">+</button>
+                    </div>
                     <button id="add-to-cart-btn" data-product-id="<?= $product['product_id'] ?>">
                         Add to Cart
                     </button>
@@ -131,15 +135,23 @@ $imgSrcs = array_filter(array_map(
             document.getElementById('current-index').textContent = current + 1;
         }
 
+        function changeQty(direction) {
+            const input = document.getElementById('quantity');
+            const max = parseInt(input.max);
+            const newVal = parseInt(input.value) + direction;
+            if (newVal >= 1 && newVal <= max) input.value = newVal;
+        }
+
         document.getElementById('add-to-cart-btn').addEventListener('click', function () {
         const productId = this.dataset.productId;
+        const quantity = document.getElementById('quantity').value;
         const btn = this;
         btn.disabled = true;
 
         fetch('add_to_cart.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `product_id=${productId}&quantity=1`
+            body: `product_id=${productId}&quantity=${quantity}` 
         })
         .then(res => res.json())
         .then(data => {
@@ -153,6 +165,7 @@ $imgSrcs = array_filter(array_map(
             }
 
             if (!data.success) btn.disabled = false;
+            else btn.disabled = false;
         })
         .catch(() => {
             document.getElementById('cart-message').textContent = 'Something went wrong.';

@@ -75,6 +75,15 @@ main .product-detail .product-info button:hover{
     color: black;
 }
 
+main .product-detail .product-info input{
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: solid;
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+    border-radius: 4px;
+}
+
 /* ── Back link ── */
 .back-link {
     display: inline-block;
@@ -157,3 +166,4 @@ main .product-detail .product-info button:hover{
     color: #888;
     font-weight: 500;
 }
+
