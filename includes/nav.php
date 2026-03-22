@@ -15,9 +15,9 @@ if (session_status() === PHP_SESSION_NONE) {
         <header class = "navbar">
             <div class = "brand">Gear<span class="green-text">Hub</span></div>
             <div class = "links">
-                <a data-active="index" href="index.php">Home</a>
-                <a data-active="about" href="about.php">About</a>
-                <a data-active="contact" href="contact.php">Contact</a>
+                <a data-active="index" href="/Website/index.php">Home</a>
+                <a data-active="about" href="/Website/about.php">About</a>
+                <a data-active="contact" href="/Website/contact.php">Contact</a>
             </div>
 
             <div class = "registerlogin">
