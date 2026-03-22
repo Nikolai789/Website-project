@@ -1,11 +1,119 @@
+<?php
+require_once __DIR__ . "/../configurations/config.php";
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
+$user_id = (int) $_SESSION['user_id'];
+
+// Fetch user info
+$stmt = $conn->prepare("SELECT username, email, address FROM users WHERE user_id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+
+// Fetch cart items
+$stmt = $conn->prepare("
+    SELECT ci.cart_item_id, ci.quantity, p.product_id, p.name, p.price, p.stock
+    FROM cart_items ci
+    JOIN products p ON ci.product_id = p.product_id
+    WHERE ci.user_id = ?
+");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$items = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
+
+if (empty($items)) {
+    header("Location: ../cart.php");
+    exit;
+}
+
+$total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $items));
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Checkout - Periph</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/checkout.css">
 </head>
 <body>
-    <h1 style="color: #3f77b7;">Checkout Area</h1>
+    <?php include "../includes/nav.php" ?>
+
+    <main>
+        <div class="container">
+            <div class="box">
+                <h1>Checkout</h1>
+            </div>
+            <?php if (isset($_GET['error'])): ?>
+                <p style="color: red;"><?= htmlspecialchars($_GET['error']) ?></p>
+            <?php endif; ?>
+
+            <div class="checkout-wrapper">
+                <div class="box">
+                    <div class="order-summary">
+                        <h2>Order Summary</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($items as $item): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($item['name']) ?></td>
+                                    <td><?= $item['quantity'] ?></td>
+                                    <td>₱<?= number_format($item['price'] * $item['quantity'], 2) ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2"><strong>Total</strong></td>
+                                    <td><strong>₱<?= number_format($total, 2) ?></strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>    
+                
+                <div class="checkout-form">
+                    <div class="box">
+                        <h2>Delivery Details</h2>
+                        <form action="process_checkout.php" method="POST">
+                            <label>Name</label>
+                            <input type="text" value="<?= htmlspecialchars($user['username']) ?>" disabled>
+
+                            <label>Email</label>
+                            <input type="text" value="<?= htmlspecialchars($user['email']) ?>" disabled>
+
+                            <label>Shipping Address</label>
+                            <input type="text" name="shipping_address" required
+                                value="<?= htmlspecialchars($user['address'] ?? '') ?>"
+                                placeholder="Enter your shipping address">
+
+                            <label>Payment Method</label>
+                            <input type="text" value="Cash on Delivery" disabled>
+
+                            <button type="submit">Place Order</button>
+                        </form>
+                    </div>    
+                </div>
+
+            </div>
+        </div>
+    </main>
 </body>
 </html>

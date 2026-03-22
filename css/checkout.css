@@ -1,0 +1,29 @@
+main{
+    background-color: rgb(5, 35, 63);
+}
+
+main .box{
+    background-color: white;
+    border-bottom: outset 10px rgba(52, 53, 58,0.9);
+    border-right: outset 10px rgba(52, 53, 58,0.9);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+}
+main .container h1{
+    text-align: center;
+    padding: 32px;
+    font-size: 48px;
+    font-weight: bold;
+    background-color: rgb(48, 143, 231);
+    color: white;
+}
+
+main .order-summary{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    margin: 20px;
+}
+
