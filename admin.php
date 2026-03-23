@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . "/configurations/config.php";
+require_once __DIR__ . "/configurations/authentication.php";
+requireAdmin();
 
 $allowedCategories = ['Keyboard', 'Mouse', 'Headphone'];
 $selectedCategory = $_GET['category'] ?? '';
