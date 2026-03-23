@@ -1,101 +1,185 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    box-sizing: 0;
+    box-sizing: border-box;
 }
 
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@300;400;500&display=swap');
+
+body {
+    font-family: 'Exo 2', sans-serif;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    color:  #333;
-    background: linear-gradient(to bottom, black, white) ;
+    background-color: #ffffff;
+    color: #e8edf5;
 }
 
+.form-box a:hover {
+    color: #00c8ff;
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
+    text-decoration: none;;
+}
+
+/* ── Container ── */
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 80vh;
     padding: 20px;
-    box-sizing: border-box;
-}
-
-.form-box{
     width: 100%;
-    max-width: 450px;
-    padding: 30px;
-    background-color: rgb(216, 216, 216);
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(110, 168, 63, 0.459);
-    display: none;
 }
 
-.form-box.active{
+/* ── Form Box ── */
+.form-box {
+    width: 100%;
+    max-width: 440px;
+    padding: 40px 36px 32px;
+    background: #0f1623;
+    border: 1px solid rgba(0, 200, 255, 0.15);
+    border-radius: 14px;
+    box-shadow:
+        0 0 40px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(0, 200, 255, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    display: none;
+    animation: fadein 0.4s ease both;
+}
+
+.form-box.active {
     display: block;
 }
 
-h2{
-    font-size: 34px;
-    text-align: center;
-    margin-bottom: 20px;
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-input{
+/* ── Back arrow ── */
+.form-box a[href="index.php"] {
+    display: inline-block;
+    font-size: 1rem;
+    color: #5a6a85;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.form-box a[href="index.php"]:hover {
+    color: #00c8ff;
+}
+
+/* ── Heading ── */
+h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #e8edf5;
+    margin-bottom: 28px;
+}
+
+/* ── Inputs ── */
+input {
     width: 100%;
     box-sizing: border-box;
-    padding: 12px;
-    background: #eee;
-    border-radius: 6px;
-    border: none;
+    padding: 11px 14px;
+    background: #0a1220;
+    border: 1px solid rgba(0, 200, 255, 0.12);
+    border-radius: 7px;
     outline: none;
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 20px;
-
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    color: #e8edf5;
+    margin-bottom: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-button{
+input::placeholder {
+    color: #5a6a85;
+}
+
+input:hover {
+    border-color: rgba(0, 200, 255, 0.25);
+}
+
+input:focus {
+    border-color: rgba(0, 200, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(0, 200, 255, 0.07), 0 0 12px rgba(0, 200, 255,0.08);
+}
+
+/* ── Button ── */
+button {
     width: 100%;
     padding: 12px;
-    background-color: #5f862c;
+    background: #0080ff;
     border: none;
-    border-radius: 6px;
+    border-radius: 7px;
     cursor: pointer;
-    font-size: 16px;
-    color: white;
-    font-weight: 500;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
     margin-bottom: 20px;
-    transition: 0.5s;
+    box-shadow: 0 0 18px rgba(0, 200, 255, 0.25);
+    transition: box-shadow 0.2s, transform 0.2s;
 }
 
-button:hover{
-    background: #34c7c7;
+button:hover {
+    box-shadow: 0 0 30px rgba(0, 200, 255, 0.5), 0 0 60px rgba(0, 200, 255, 0.15);
+    transform: translateY(-1px);
 }
 
-p{
-    font-size: 14px;
+button:active {
+    transform: translateY(0);
+}
+
+/* ── Paragraph & links ── */
+p {
+    font-size: 0.82rem;
     text-align: center;
+    color: #5a6a85;
     margin-bottom: 10px;
 }
 
-p a{
-    color: #3462c7;
+p a {
+    color: #00c8ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: text-shadow 0.2s;
+}
+
+p a:hover {
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
     text-decoration: none;
 }
 
-p a:hover{
-    text-decoration: underline;
+/* ── Divider between heading and form ── */
+h2::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #0077ff, #00c8ff);
+    border-radius: 2px;
+    margin: 10px auto 0;
+    box-shadow: 0 0 8px rgba(0, 200, 255, 0.4);
 }
 
-.error-message{
-    color: #a42834;
-    font-size: 16px;
-    margin-bottom: 20px;
-    padding: 12px;
-    background: #f8d7da;
-    border-radius: 6px;
+/* ── Error message ── */
+.error-message {
+    color: #ff6b83;
+    font-size: 0.82rem;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: rgba(255, 77, 106, 0.08);
+    border: 1px solid rgba(255, 77, 106, 0.25);
+    border-radius: 7px;
     text-align: center;
 }

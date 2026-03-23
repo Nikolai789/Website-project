@@ -64,28 +64,33 @@ main .product-items .products .product-img {
 main .product-items .products .name{
     font-weight: bold;
     font-size: 20px;
+    padding: 5px 10px;
 }
 
 main .product-items .products .price{
     font-weight: bold;
     font-size: 18px;
     color: darkred;
+    padding: 5px 10px;
 }
 
 main .product-items .products .stocks{
     font-weight: bold;
     font-size: 18px;
+    padding: 5px 10px;
 }
 
 main .product-items .products .stocks span{
     font-weight: bold;
     font-size: 18px;
     color: darkgoldenrod;
+    padding: 5px 10px;
 }
 
 main .product-items .products a{
     color: black;
     text-decoration: none;
+    padding: 5px 10px;
 }
 
 main .product-items .products:hover{
