@@ -1,3 +1,33 @@
+<?php
+if (!function_exists('app_url')) {
+    function app_url(string $path = ''): string
+    {
+        static $basePath = null;
+
+        if ($basePath === null) {
+            $documentRoot = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : false;
+            $projectRoot = realpath(dirname(__DIR__));
+
+            if ($documentRoot && $projectRoot) {
+                $normalizedDocumentRoot = str_replace('\\', '/', $documentRoot);
+                $normalizedProjectRoot = str_replace('\\', '/', $projectRoot);
+
+                if (strpos($normalizedProjectRoot, $normalizedDocumentRoot) === 0) {
+                    $basePath = substr($normalizedProjectRoot, strlen($normalizedDocumentRoot));
+                }
+            }
+
+            if ($basePath === null || $basePath === false) {
+                $basePath = '';
+            }
+
+            $basePath = rtrim((string) $basePath, '/');
+        }
+
+        return $basePath . '/' . ltrim($path, '/');
+    }
+}
+?>
 <footer class="footer">
     <div class="footer-top">
         
@@ -5,12 +35,12 @@
         <div class="footer-left">
             <div class="footer-item">
                 <p>Learn more about us</p>
-                <a href="about.php" class="footer-btn">About Us</a>
+                <a href="<?= htmlspecialchars(app_url('about.php')) ?>" class="footer-btn">About Us</a>
             </div>
 
             <div class="footer-item">
                 <p>Need help? Email us!</p>
-                <a href="contact.php" class="footer-btn">Contact</a>
+                <a href="<?= htmlspecialchars(app_url('contact.php')) ?>" class="footer-btn">Contact</a>
             </div>
         </div>
 
@@ -23,13 +53,13 @@
 
             <div class="social-icons">
                 <a href="https://www.facebook.com/whysharethislinkyoumf" target="_blank"> 
-                    <img src="Assets/Icons/facebook-logo-facebook-social-media-icon-free-png.png" alt="Facebook">
+                    <img src="<?= htmlspecialchars(app_url('Assets/Icons/facebook-logo-facebook-social-media-icon-free-png.png')) ?>" alt="Facebook">
                 </a>
                 <a href="https://www.instagram.com/pinyatooo_arts1?fbclid=IwY2xjawQrPGxleHRuA2FlbQIxMABicmlkETExd3FVemNUVFEzdWxFWDdmc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHpJB2tM_zXoInX87Y-cJ1FF-dEz761AmoIBe1KkVvfITCA9iUcWGG-RjSStU_aem_dKmc10fdxe7PEC5OyY4hKQ" target="_blank">
-                    <img src="Assets/Icons/instagram-button-icon-set-instagram-screen-social-media-and-social-network-interface-template-stories-user-button-symbol-sign-logo-stories-liked-editorial-free-png.png" alt="Instagram">
+                    <img src="<?= htmlspecialchars(app_url('Assets/Icons/instagram-button-icon-set-instagram-screen-social-media-and-social-network-interface-template-stories-user-button-symbol-sign-logo-stories-liked-editorial-free-png.png')) ?>" alt="Instagram">
                 </a>
                 <a href="https://x.com/hews__" target="_blank">
-                    <img src="Assets/Icons/new-twitter-x-logo-twitter-icon-x-social-media-icon-free-png.png" alt="Twitter">
+                    <img src="<?= htmlspecialchars(app_url('Assets/Icons/new-twitter-x-logo-twitter-icon-x-social-media-icon-free-png.png')) ?>" alt="Twitter">
                 </a>
             </div>
         </div>

@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . "/configurations/config.php";
+require_once __DIR__ . "/configurations/authentication.php";
+requireAdmin();
 
 $allowedCategories = ['Keyboard', 'Mouse', 'Headphone'];
 $selectedCategory = $_GET['category'] ?? '';
@@ -67,9 +69,8 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
             <div class="admin-title">Admin Panel</div>
 
             <nav class="admin-nav">
-                <a href="#" class="tab active">Products</a>
-                <a href="#" class="tab">Dashboard</a>
-                <a href="#" class="tab">Orders</a>
+                <a href="admin.php" class="tab active">Products</a>
+                <a href="admin_orders.php" class="tab">Orders</a>
             </nav>
 
             <a href="logout.php" class="admin-logout">logout</a>

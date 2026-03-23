@@ -36,6 +36,7 @@ if (empty($items)) {
 }
 
 $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $items));
+$hasAddress = !empty(trim((string) ($user['address'] ?? '')));
 
 // Read and clear session messages
 $error   = $_SESSION['checkout_error']   ?? '';
@@ -136,14 +137,19 @@ unset($_SESSION['checkout_error'], $_SESSION['checkout_success']);
                             <input type="text" value="<?= htmlspecialchars($user['email']) ?>" disabled>
 
                             <label>Shipping Address</label>
-                            <input type="text" name="shipping_address" required
-                                value="<?= htmlspecialchars($user['address'] ?? '') ?>"
-                                placeholder="Enter your shipping address">
+                            <?php if ($hasAddress): ?>
+                                <input type="text" value="<?= htmlspecialchars($user['address']) ?>" disabled>
+                            <?php else: ?>
+                                <input type="text" value="No address on file" disabled style="color: red;">
+                                <small>Please <a href="../edit_profile.php">update your profile</a> to add a shipping address before placing an order.</small>
+                            <?php endif; ?>
 
                             <label>Payment Method</label>
                             <input type="text" value="Cash on Delivery" disabled>
 
-                            <button type="submit">Place Order</button>
+                            <button type="submit" <?= $hasAddress ? '' : 'disabled title="Add your shipping address first"' ?>>
+                                <?= $hasAddress ? 'Place Order' : 'Add Address to Continue' ?>
+                            </button>
                         </form>
                     </div>
                 </div>
