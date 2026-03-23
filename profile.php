@@ -150,7 +150,7 @@ function orderStatusClass(string $status): string
                             aria-controls="receipt-<?= (int) $order['order_id'] ?>"
                         >
                             <div class="receipt-meta">
-                                <span class="receipt-id">Order #<?= (int) $order['order_id'] ?></span>
+                                <span class="receipt-id">Order</span>
                                 <span class="receipt-date">Placed on <?= date('F j, Y g:i A', strtotime($order['created_at'])) ?></span>
                             </div>
                             <div class="receipt-summary">

@@ -3,29 +3,58 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+if (!function_exists('app_url')) {
+    function app_url(string $path = ''): string
+    {
+        static $basePath = null;
+
+        if ($basePath === null) {
+            $documentRoot = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : false;
+            $projectRoot = realpath(dirname(__DIR__));
+
+            if ($documentRoot && $projectRoot) {
+                $normalizedDocumentRoot = str_replace('\\', '/', $documentRoot);
+                $normalizedProjectRoot = str_replace('\\', '/', $projectRoot);
+
+                if (strpos($normalizedProjectRoot, $normalizedDocumentRoot) === 0) {
+                    $basePath = substr($normalizedProjectRoot, strlen($normalizedDocumentRoot));
+                }
+            }
+
+            if ($basePath === null || $basePath === false) {
+                $basePath = '';
+            }
+
+            $basePath = rtrim((string) $basePath, '/');
+        }
+
+        return $basePath . '/' . ltrim($path, '/');
+    }
+}
 ?>
 
 <head> 
     <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/logout_modal.css">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('css/style.css')) ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('css/logout_modal.css')) ?>">
 </head>
 
     <nav>
         <header class = "navbar">
             <div class = "brand">Gear<span class="green-text">Hub</span></div>
             <div class = "links">
-                <a data-active="index" href="index.php">Home</a>
-                <a data-active="about" href="about.php">About</a>
-                <a data-active="contact" href="contact.php">Contact</a>
+                <a data-active="index" href="<?= htmlspecialchars(app_url('index.php')) ?>">Home</a>
+                <a data-active="about" href="<?= htmlspecialchars(app_url('about.php')) ?>">About</a>
+                <a data-active="contact" href="<?= htmlspecialchars(app_url('contact.php')) ?>">Contact</a>
             </div>
 
             <div class = "registerlogin">
                 <?php if (!empty($_SESSION['username'])): ?>
-                    <a href="profile.php"><?= htmlspecialchars($_SESSION['username']) ?></a>
-                    <a href="logout.php">Logout</a>
+                    <a href="<?= htmlspecialchars(app_url('profile.php')) ?>"><?= htmlspecialchars($_SESSION['username']) ?></a>
+                    <a href="<?= htmlspecialchars(app_url('logout.php')) ?>">Logout</a>
                 <?php else: ?>
-                    <a href="login.php">Login</a>
+                    <a href="<?= htmlspecialchars(app_url('login.php')) ?>">Login</a>
                 <?php endif; ?>
             </div>
         </header>
