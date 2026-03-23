@@ -1,5 +1,4 @@
 <nav>
-    <hr class="navhr">
         <div class="nav2">
 
             <script>
@@ -20,9 +19,8 @@
                 </form>
             </div>
 
-            <a class="cart" href="check-out/checkout.php">🛒</a>
+            <a class="cart" href="check-out/checkout.php">🛒 Cart</a>
             
         </div>
     
-        <hr class="greenhr">
 </nav>

@@ -15,12 +15,17 @@ nav .brand{
     font-size: 30px;
     font-weight: bold;
     color: white;
-    text-shadow: 0 0 6px #ffffff, 0 0 18px rgba(253, 255, 255, 0.7);
+    text-shadow: 0 0 6px #ffffff, 0 0 15px rgba(253, 255, 255, 0.7);
 }
 
 nav .green-text{
-    color:#3f77b7;
-    text-shadow: 0 0 6px #0d89ac, 0 0 18px rgba(12, 155, 195, 0.7);
+    animation: shift 4s ease-in-out infinite;
+}
+
+@keyframes shift {
+  0%,100% { color: #00c8ff; text-shadow: 0 0 15px rgba(0,200,255,0.9); }
+  33%      { color: #b048ff; text-shadow: 0 0 15px rgba(176,72,255,0.9); }
+  66%      { color: #3dffb0; text-shadow: 0 0 15px rgba(61,255,176,0.9); }
 }
 
 nav a{

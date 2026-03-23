@@ -7,11 +7,11 @@ main{
 }
 main .container{
     display: block;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 1);
     padding: 50px;
     margin: 40px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 main .product-detail{

@@ -50,6 +50,14 @@ header .Welcome{
     line-height: 0px;
     color: #ffffff;
     text-shadow: 0 0 6px #007bff, 0 0 18px rgba(0, 98, 255, 0.7);
+    animation: flicker 3s linear infinite;
+}
+
+@keyframes flicker {
+  0%,19%,21%,23%,25%,54%,56%,100% {
+    text-shadow: 0 0 8px rgba(0,200,255,0.8), 0 0 20px rgba(0,200,255,0.5);
+  }
+  20%,24%,55% { text-shadow: none; color: rgba(0,200,255,0.4); }
 }
 
 header .subtitle{

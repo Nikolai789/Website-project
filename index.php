@@ -88,7 +88,8 @@ if (!empty($params)) {
 <body>
     <?php include "includes/nav.php" ?>
     <?php include "includes/header.php" ?>
-    <?php include "includes/second_nav.php" ?>
+
+
 
     <?php if (!empty($cartNotice)): ?>
         <p class="msg msg-error"><?= htmlspecialchars($cartNotice) ?></p>
@@ -104,7 +105,7 @@ if (!empty($params)) {
                 <a href="index.php?category=Headphone" <?= $category === 'Headphone' ? 'class="active"' : '' ?>>Headphone</a>
             </div>
 
-            <hr>
+            <?php include "includes/second_nav.php" ?>
 
             <div class="product-items">
                 <?php if ($result && $result->num_rows > 0): ?>

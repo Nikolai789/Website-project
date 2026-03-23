@@ -1,15 +1,9 @@
-.navhr{
-    border: none;
-    height: 3px;
-    background-color: black;
-}
-
 .nav2{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-right: 20px;
-    background-color: rgb(4, 4, 4);
+    margin-top: 20px;
 }
 
 /* cart design */
@@ -17,7 +11,14 @@
     font-size: 1.2rem;
     border-radius: 15px;
     text-decoration: none;
-    text-shadow: 0 0 8px rgba(0,200,255,0.5);   
+    color: black; 
+    text-shadow: 0 0 0px , 0 0 0px;
+}
+
+.nav2 .cart:hover{
+    background-color: #3f77b7;
+    color: white;
+    text-shadow: 0 0 0px , 0 0 0px;
 }
 
 /* search bar design*/
