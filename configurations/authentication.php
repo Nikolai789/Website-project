@@ -37,9 +37,9 @@ function requireAdmin(): void {
 }
 
 /**
- * Ensure the user is logged in AND is a customer.
+ * Ensure the user is logged in AND is a regular user.
  * If not logged in, redirect to login.
- * If logged in but not a customer (e.g. admin), redirect to admin page.
+ * If logged in but not a regular user (e.g. admin), redirect to admin page.
  */
 function requireCustomer(): void {
     if (session_status() === PHP_SESSION_NONE) {
@@ -51,7 +51,7 @@ function requireCustomer(): void {
         exit;
     }
 
-    if ($_SESSION['user_role'] !== 'customer') {
+    if ($_SESSION['user_role'] !== 'user') {
         header("Location: /admin.php");
         exit;
     }

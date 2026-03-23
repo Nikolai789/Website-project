@@ -1,16 +1,15 @@
-/* ── Profile Page Styles ── */
 :root {
-    --bg-deep:      white;
-    --bg-card:      #0f1623;
-    --bg-card2:     #141c2e;
-    --accent:       #00c8ff;
-    --accent2:      #0077ff;
+    --bg-deep: white;
+    --bg-card: #0f1623;
+    --bg-card2: #141c2e;
+    --accent: #00c8ff;
+    --accent2: #0077ff;
     --text-primary: #e8edf5;
-    --text-muted:   #5a6a85;    
-    --border:       rgba(0, 200, 255, 0.12);
+    --text-muted: #5a6a85;
+    --border: rgba(0, 200, 255, 0.12);
     --border-hover: rgba(0, 200, 255, 0.35);
 }
- 
+
 body {
     background-color: var(--bg-deep);
     font-family: 'Exo 2', sans-serif;
@@ -24,22 +23,20 @@ body {
 .profile-header .profile_text {
     color: #1094b9;
 }
- 
-/* ── Wrapper ── */
+
 .profile-wrapper {
     max-width: 860px;
     margin: 48px auto;
     padding: 0 20px;
 }
- 
-/* ── Page Header ── */
+
 .profile-header {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 32px;
 }
- 
+
 .profile-header h2 {
     font-family: 'Rajdhani', sans-serif;
     font-size: 1.6rem;
@@ -49,64 +46,63 @@ body {
     color: var(--text-primary);
     margin: 0;
 }
- 
+
 .profile-header h2 span {
     color: var(--accent);
 }
- 
+
 .header-line {
     flex: 1;
     height: 1px;
     background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
     opacity: 0.35;
 }
- 
-/* ── Main Card ── */
+
 .profile-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 0 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
     animation: fadein 0.45s ease both;
 }
- 
-/* ── Banner ── */
+
 .profile-banner {
     height: 110px;
     background: linear-gradient(135deg, #0a1628 0%, #0d2040 40%, #091830 70%, #050e1a 100%);
     position: relative;
     overflow: hidden;
 }
- 
+
 .profile-banner::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 60% 80% at 20% 50%, rgba(0,200,255,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 60% at 80% 30%, rgba(0,119,255,0.10) 0%, transparent 55%);
+        radial-gradient(ellipse 60% 80% at 20% 50%, rgba(0, 200, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 80% 30%, rgba(0, 119, 255, 0.1) 0%, transparent 55%);
 }
- 
+
 .profile-banner::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
     opacity: 0.4;
 }
- 
+
 .banner-grid {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(0, 200, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 200, 255, 0.04) 1px, transparent 1px);
     background-size: 32px 32px;
 }
- 
-/* ── Identity Row ── */
+
 .profile-identity {
     display: flex;
     align-items: flex-end;
@@ -115,12 +111,12 @@ body {
     margin-top: -44px;
     position: relative;
 }
- 
+
 .avatar-wrap {
     position: relative;
     flex-shrink: 0;
 }
- 
+
 .avatar {
     width: 88px;
     height: 88px;
@@ -135,28 +131,34 @@ body {
     font-weight: 700;
     color: #fff;
     letter-spacing: 0.05em;
-    box-shadow: 0 0 24px rgba(0,200,255,0.3), 0 0 0 1px var(--accent);
+    box-shadow: 0 0 24px rgba(0, 200, 255, 0.3), 0 0 0 1px var(--accent);
     position: relative;
     z-index: 1;
 }
- 
+
 .avatar-ring {
     position: absolute;
     inset: -5px;
     border-radius: 50%;
-    border: 1px solid rgba(0,200,255,0.3);
+    border: 1px solid rgba(0, 200, 255, 0.3);
     animation: pulse-ring 3s ease-in-out infinite;
 }
- 
+
 @keyframes pulse-ring {
-    0%, 100% { opacity: 0.3; transform: scale(1); }
-    50%       { opacity: 0.7; transform: scale(1.06); }
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.06);
+    }
 }
- 
+
 .profile-name-block {
     padding-bottom: 4px;
 }
- 
+
 .profile-name {
     font-family: 'Rajdhani', sans-serif;
     font-size: 1.55rem;
@@ -166,21 +168,19 @@ body {
     line-height: 1;
     margin-bottom: 5px;
 }
- 
+
 .profile-email {
     font-size: 0.82rem;
     color: var(--text-muted);
     letter-spacing: 0.03em;
 }
- 
-/* ── Divider ── */
+
 .card-divider {
     height: 1px;
     background: var(--border);
     margin: 0 28px;
 }
- 
-/* ── Info Grid ── */
+
 .profile-info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -188,17 +188,17 @@ body {
     background: var(--border);
     border-top: 1px solid var(--border);
 }
- 
+
 .info-cell {
     background: var(--bg-card);
     padding: 20px 24px;
     transition: background 0.2s;
 }
- 
+
 .info-cell:hover {
     background: var(--bg-card2);
 }
- 
+
 .info-label {
     font-size: 0.68rem;
     font-weight: 500;
@@ -207,7 +207,7 @@ body {
     color: var(--text-muted);
     margin-bottom: 6px;
 }
- 
+
 .info-value {
     font-family: 'Rajdhani', sans-serif;
     font-size: 1rem;
@@ -215,12 +215,11 @@ body {
     color: var(--text-primary);
     letter-spacing: 0.04em;
 }
- 
+
 .info-value.accent {
     color: var(--accent);
 }
- 
-/* ── Status Badge ── */
+
 .status-badge {
     display: inline-flex;
     align-items: center;
@@ -230,7 +229,7 @@ body {
     color: #3dffb0;
     letter-spacing: 0.06em;
 }
- 
+
 .status-dot {
     width: 7px;
     height: 7px;
@@ -239,13 +238,16 @@ body {
     box-shadow: 0 0 6px #3dffb0;
     animation: blink 2s ease-in-out infinite;
 }
- 
+
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.4; }
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
 }
- 
-/* ── Action Row ── */
+
 .profile-actions {
     display: flex;
     gap: 12px;
@@ -253,7 +255,7 @@ body {
     background: var(--bg-card);
     border-top: 1px solid var(--border);
 }
- 
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -270,39 +272,254 @@ body {
     text-decoration: none;
     transition: all 0.2s;
 }
- 
+
 .btn-primary {
     background: linear-gradient(135deg, var(--accent2), var(--accent));
     color: #fff;
-    box-shadow: 0 0 16px rgba(0,200,255,0.25);
+    box-shadow: 0 0 16px rgba(0, 200, 255, 0.25);
 }
- 
+
 .btn-primary:hover {
-    box-shadow: 0 0 26px rgba(0,200,255,0.45);
+    box-shadow: 0 0 26px rgba(0, 200, 255, 0.45);
     transform: translateY(-1px);
 }
- 
+
 .btn-ghost {
     background: transparent;
     color: var(--text-muted);
     border: 1px solid var(--border);
 }
- 
+
 .btn-ghost:hover {
     border-color: var(--border-hover);
     color: var(--text-primary);
-    background: rgba(0,200,255,0.05);
+    background: rgba(0, 200, 255, 0.05);
 }
- 
-/* ── Animations ── */
+
+.orders-section {
+    margin-top: 36px;
+}
+
+.no-orders {
+    margin: 0;
+    padding: 26px 28px;
+    color: #334155;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.receipt-card {
+    margin-bottom: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 252, 0.96));
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.receipt-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 22px;
+    border: none;
+    background: transparent;
+    color: #0f172a;
+    cursor: pointer;
+    text-align: left;
+}
+
+.receipt-header:hover {
+    background: rgba(14, 165, 233, 0.05);
+}
+
+.receipt-header.is-open {
+    background: rgba(14, 165, 233, 0.07);
+}
+
+.receipt-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.receipt-id {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #0f172a;
+}
+
+.receipt-date {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.receipt-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.receipt-count {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.receipt-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.receipt-status.status-pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.receipt-status.status-paid {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.receipt-status.status-shipped {
+    background: #ecfeff;
+    color: #155e75;
+}
+
+.receipt-status.status-delivered {
+    background: #ecfdf3;
+    color: #166534;
+}
+
+.receipt-total {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.12rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: 0.03em;
+}
+
+.receipt-toggle {
+    font-size: 0.95rem;
+    color: #0ea5e9;
+    transition: transform 0.2s ease;
+}
+
+.receipt-header.is-open .receipt-toggle {
+    transform: rotate(180deg);
+}
+
+.receipt-body {
+    padding: 0 22px 22px;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.receipt-body-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 0 16px;
+    color: #0f172a;
+}
+
+.receipt-body-head strong {
+    display: block;
+    font-size: 1rem;
+}
+
+.receipt-body-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #64748b;
+}
+
+.receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.receipt-table th,
+.receipt-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+    text-align: left;
+    color: #0f172a;
+}
+
+.receipt-table thead th {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    background: #f8fafc;
+}
+
+.receipt-table tbody tr:last-child td {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+}
+
+.receipt-table tfoot td {
+    font-weight: 700;
+    background: #f8fafc;
+}
+
 @keyframes fadein {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
- 
-/* ── Responsive ── */
+
 @media (max-width: 600px) {
-    .profile-info    { grid-template-columns: 1fr 1fr; }
-    .profile-identity { gap: 14px; }
-    .profile-actions { flex-wrap: wrap; }
+    .profile-info {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .profile-identity {
+        gap: 14px;
+    }
+
+    .profile-actions {
+        flex-wrap: wrap;
+    }
+
+    .receipt-header,
+    .receipt-summary,
+    .receipt-body-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .receipt-table {
+        display: block;
+        overflow-x: auto;
+    }
 }
