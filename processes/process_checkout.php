@@ -12,18 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $user_id = (int) $_SESSION['user_id'];
 
-$stmt = $conn->prepare("SELECT address FROM users WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$user = $stmt->get_result()->fetch_assoc();
-$stmt->close();
-
-if (empty(trim((string) ($user['address'] ?? '')))) {
-    $_SESSION['checkout_error'] = 'Please add your shipping address before placing an order.';
-    header("Location: ../check-out/checkout.php");
-    exit;
-}
-
 // Fetch cart items with current price and stock
 $stmt = $conn->prepare("
     SELECT ci.cart_item_id, ci.quantity, p.product_id, p.name, p.price, p.stock
@@ -59,7 +47,7 @@ $conn->begin_transaction();
 try {
     // Insert order
     $stmt = $conn->prepare("
-        INSERT INTO orders (user_id, total_amount, status)
+        INSERT INTO orders (user_id, total_amount, status)  
         VALUES (?, ?, 'pending')
     ");
     $stmt->bind_param("id", $user_id, $total);
