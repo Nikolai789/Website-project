@@ -33,7 +33,11 @@ function isActiveForm($formName, $activeForm) {
 </head>
 
 <body>
-    <?php include "includes/nav.php" ?>
+    <div class="login_title">
+        <h1>Gear<span class="Hub_login_text">Hub</span></h1>
+        <h3>Online Computer Peripheral Store</h3>
+    </div>
+
 
     <div class="container">
         <div class="form-box <?= isActiveForm('login', $activeForm); ?>" id="login-form">
@@ -60,6 +64,10 @@ function isActiveForm($formName, $activeForm) {
                 <p>Already have an account? <a href="#" onclick="showForm('login-form')">Login</a></p>
             </form>
         </div>
+    </div>
+
+    <div class="login_bottom_text">
+        <p>GearHub © 2026. All rights reserved.</p>
     </div>
 
     <script src="javascript/login.js"></script>

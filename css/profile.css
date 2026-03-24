@@ -54,7 +54,7 @@ body {
 .header-line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+    background: var(--accent);
     opacity: 0.35;
 }
 
@@ -69,7 +69,7 @@ body {
 
 .profile-banner {
     height: 110px;
-    background: linear-gradient(135deg, #0a1628 0%, #0d2040 40%, #091830 70%, #050e1a 100%);
+    background: #0d2040;
     position: relative;
     overflow: hidden;
 }
@@ -78,9 +78,6 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-        radial-gradient(ellipse 60% 80% at 20% 50%, rgba(0, 200, 255, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 60% at 80% 30%, rgba(0, 119, 255, 0.1) 0%, transparent 55%);
 }
 
 .profile-banner::after {
