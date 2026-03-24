@@ -7,6 +7,23 @@ if (isset($_POST['register'])) {
     $email    = trim($_POST['email']    ?? '');
     $password = $_POST['password']      ?? '';
 
+    // Validate username length
+    if (strlen($username) < 6) {
+        $_SESSION['register_error'] = 'Username must be at least 6 characters.';
+        $_SESSION['active_form']    = 'register';
+        header("Location: ../login.php");
+        exit();
+    }
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['register_error'] = 'Please enter a valid email address.';
+        $_SESSION['active_form']    = 'register';
+        header("Location: ../login.php");
+        exit();
+    }
+
+
         // Validate password length
     if (strlen($password) < 6) {
         $_SESSION['register_error'] = 'Password must be at least 6 characters.';
@@ -14,6 +31,8 @@ if (isset($_POST['register'])) {
         header("Location: ../login.php");
         exit();
     }
+
+
     
 
     // Check if email is already registered
