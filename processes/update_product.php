@@ -37,6 +37,8 @@ if ($productIdInt <= 0) {
     exit();
 }
 
+setCurrentActivityLogContext($conn, 'updated_product');
+
 /**
  * Compress uploaded image bytes to JPEG to reduce DB packet size.
  * Returns compressed binary string or null if compression fails.
@@ -206,7 +208,6 @@ if ($ok) {
     }
 
     $conn->commit();
-    logCurrentUserActivity($conn, 'updated_product', 'products', $productIdInt);
 } else {
     $conn->rollback();
 }

@@ -22,16 +22,13 @@ if ($cart_item_id <= 0) {
     exit;
 }
 
+setActivityLogContext($conn, $user_id, 'removed_cart_item');
+
 // Delete only if the item belongs to this user
 $stmt = $conn->prepare("DELETE FROM cart_items WHERE cart_item_id = ? AND user_id = ?");
 $stmt->bind_param("ii", $cart_item_id, $user_id);
-$removed = $stmt->execute();
-$affectedRows = $stmt->affected_rows;
+$stmt->execute();
 $stmt->close();
-
-if ($removed && $affectedRows > 0) {
-    logActivity($conn, $user_id, 'removed_cart_item', 'cart_items', $cart_item_id);
-}
 
 // If cart is now empty, send them back to the store
 $stmt = $conn->prepare("SELECT COUNT(*) FROM cart_items WHERE user_id = ?");

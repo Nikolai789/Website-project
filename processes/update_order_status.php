@@ -31,14 +31,12 @@ if (!$order) {
     exit;
 }
 
+setCurrentActivityLogContext($conn, 'updated_order_status_to_' . $status);
+
 $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE order_id = ?");
 $stmt->bind_param("si", $status, $orderId);
 $stmt->execute();
 $stmt->close();
-
-if (($order['status'] ?? '') !== $status) {
-    logCurrentUserActivity($conn, 'updated_order_status_to_' . $status, 'orders', $orderId);
-}
 
 $_SESSION['admin_order_success'] = "Order #{$orderId} status updated to " . ucwords(str_replace('_', ' ', $status)) . '.';
 header("Location: ../admin_orders.php");

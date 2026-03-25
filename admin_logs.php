@@ -178,6 +178,7 @@ function formatLogTableLabel(string $tableName): string
                                 <tr>
                                     <th>log id</th>
                                     <th>user</th>
+                                    <th>user id</th>
                                     <th>action</th>
                                     <th>table</th>
                                     <th>record id</th>
@@ -210,6 +211,7 @@ function formatLogTableLabel(string $tableName): string
                                                 </span>
                                             </div>
                                         </td>
+                                        <td><?= $log['user_id'] !== null ? (int) $log['user_id'] : 'N/A' ?></td>
                                         <td><span class="log-pill"><?= htmlspecialchars(formatLogActionLabel((string) $log['action'])) ?></span></td>
                                         <td><span class="log-pill log-pill-table"><?= htmlspecialchars(formatLogTableLabel((string) $log['table_name'])) ?></span></td>
                                         <td><?= $log['record_id'] !== null ? (int) $log['record_id'] : 'N/A' ?></td>

@@ -6,6 +6,8 @@ require_once __DIR__ . "/../configurations/activity_logger.php";
 requireAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    setCurrentActivityLogContext($conn, 'created_product');
+
     $name = $_POST['name'] ?? '';
     $category = $_POST['category'] ?? '';
     $price = $_POST['price'] ?? 0;
@@ -57,10 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $imgStmt->close();
-    }
-
-    if ($productId) {
-        logCurrentUserActivity($conn, 'created_product', 'products', (int) $productId);
     }
 }
 

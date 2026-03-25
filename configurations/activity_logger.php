@@ -92,3 +92,49 @@ if (!function_exists('logCurrentUserActivity')) {
         return logActivity($conn, getAuthenticatedUserId(), $action, $tableName, $recordId);
     }
 }
+
+if (!function_exists('setActivityLogActor')) {
+    function setActivityLogActor(mysqli $conn, ?int $userId): bool
+    {
+        if ($userId === null || $userId <= 0) {
+            return (bool) $conn->query("SET @actor_user_id = NULL");
+        }
+
+        return (bool) $conn->query("SET @actor_user_id = " . (int) $userId);
+    }
+}
+
+if (!function_exists('setActivityLogAction')) {
+    function setActivityLogAction(mysqli $conn, ?string $action): bool
+    {
+        if ($action === null || trim($action) === '') {
+            return (bool) $conn->query("SET @activity_action = NULL");
+        }
+
+        $normalizedAction = activityLogLimitText($action, 100);
+        $escapedAction = $conn->real_escape_string($normalizedAction);
+
+        return (bool) $conn->query("SET @activity_action = '{$escapedAction}'");
+    }
+}
+
+if (!function_exists('setActivityLogSuppressed')) {
+    function setActivityLogSuppressed(mysqli $conn, bool $suppressed): bool
+    {
+        return (bool) $conn->query("SET @suppress_activity_log = " . ($suppressed ? '1' : '0'));
+    }
+}
+
+if (!function_exists('setActivityLogContext')) {
+    function setActivityLogContext(mysqli $conn, ?int $userId, ?string $action = null): bool
+    {
+        return setActivityLogActor($conn, $userId) && setActivityLogAction($conn, $action);
+    }
+}
+
+if (!function_exists('setCurrentActivityLogContext')) {
+    function setCurrentActivityLogContext(mysqli $conn, ?string $action = null): bool
+    {
+        return setActivityLogContext($conn, getAuthenticatedUserId(), $action);
+    }
+}

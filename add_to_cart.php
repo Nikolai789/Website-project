@@ -54,25 +54,16 @@ if (($current_cart_qty + $quantity) > $product['stock']) {
 // Update or insert
 if ($existing) {
     $new_qty = $existing['quantity'] + $quantity;
+    setActivityLogContext($conn, $user_id, 'increased_cart_quantity');
     $stmt = $conn->prepare("UPDATE cart_items SET quantity = ? WHERE cart_item_id = ?");
     $stmt->bind_param("ii", $new_qty, $existing['cart_item_id']);
-    $cartItemId = (int) $existing['cart_item_id'];
-    $logAction = 'increased_cart_quantity';
 } else {
+    setActivityLogContext($conn, $user_id, 'added_to_cart');
     $stmt = $conn->prepare("INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)");
     $stmt->bind_param("iii", $user_id, $product_id, $quantity);
-    $cartItemId = 0;
-    $logAction = 'added_to_cart';
 }
 
-$saved = $stmt->execute();
-if (!$existing) {
-    $cartItemId = (int) $stmt->insert_id;
-}
+$stmt->execute();
 $stmt->close();
-
-if ($saved && $cartItemId > 0) {
-    logActivity($conn, $user_id, $logAction, 'cart_items', $cartItemId);
-}
 
 echo json_encode(['success' => true, 'message' => 'Added to cart!']);

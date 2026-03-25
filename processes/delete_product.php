@@ -16,15 +16,12 @@ if ($productId <= 0) {
     exit;
 }
 
+setCurrentActivityLogContext($conn, 'deleted_product');
+
 $stmt = $conn->prepare('DELETE FROM products WHERE product_id = ?');
 $stmt->bind_param('i', $productId);
-$deleted = $stmt->execute();
-$affectedRows = $stmt->affected_rows;
+$stmt->execute();
 $stmt->close();
-
-if ($deleted && $affectedRows > 0) {
-    logCurrentUserActivity($conn, 'deleted_product', 'products', $productId);
-}
 
 header('Location: ../admin.php');
 exit;

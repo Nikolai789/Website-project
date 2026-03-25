@@ -47,14 +47,12 @@ if ($quantity > $row['stock']) {
     exit;
 }
 
+setActivityLogContext($conn, $user_id, 'updated_cart_quantity');
+
 $stmt = $conn->prepare("UPDATE cart_items SET quantity = ? WHERE cart_item_id = ? AND user_id = ?");
 $stmt->bind_param("iii", $quantity, $cart_item_id, $user_id);
-$updated = $stmt->execute();
+$stmt->execute();
 $stmt->close();
-
-if ($updated) {
-    logActivity($conn, $user_id, 'updated_cart_quantity', 'cart_items', $cart_item_id);
-}
 
 $_SESSION['checkout_success'] = 'Quantity updated.';
 header("Location: ../check-out/checkout.php");

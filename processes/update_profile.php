@@ -58,15 +58,15 @@ if (!empty($new_password)) {
 
     // Hash and update password
     $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+    setActivityLogContext($conn, $user_id, 'changed_password');
     $stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
     $stmt->bind_param("si", $hashed, $user_id);
     $stmt->execute();
     $stmt->close();
-
-    logActivity($conn, $user_id, 'changed_password', 'users', $user_id);
 }
 
 // ── Update username, email, address in DB ──
+setActivityLogContext($conn, $user_id, 'updated_profile');
 $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, address = ? WHERE user_id = ?");
 $stmt->bind_param("sssi", $username, $email, $address, $user_id);
 $stmt->execute();
@@ -84,8 +84,6 @@ $stmt->close();
 $_SESSION['username'] = $username;
 $_SESSION['email']    = $email;
 $_SESSION['address']  = $address;
-
-logActivity($conn, $user_id, 'updated_profile', 'users', $user_id);
 
 $_SESSION['edit_success'] = 'Profile updated successfully!';
 header("Location: ../edit_profile.php");

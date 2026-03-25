@@ -47,6 +47,7 @@ $conn->begin_transaction();
 
 try {
     // Insert order
+    setActivityLogContext($conn, $user_id, 'placed_order');
     $stmt = $conn->prepare("
         INSERT INTO orders (user_id, total_amount, status)  
         VALUES (?, ?, 'pending')
@@ -68,13 +69,14 @@ try {
     $stmt->close();
 
     // Clear the cart
+    setActivityLogSuppressed($conn, true);
     $stmt = $conn->prepare("DELETE FROM cart_items WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $stmt->close();
+    setActivityLogSuppressed($conn, false);
 
     $conn->commit();
-    logActivity($conn, $user_id, 'placed_order', 'orders', (int) $order_id);
 
 } catch (Exception $e) {
     $conn->rollback();

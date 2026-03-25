@@ -53,15 +53,11 @@ if (isset($_POST['register'])) {
 
     // Insert new user
     $hashed = password_hash($password, PASSWORD_DEFAULT);
+    setActivityLogContext($conn, null, 'registered_account');
     $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $username, $email, $hashed);
     $stmt->execute();
-    $newUserId = (int) $stmt->insert_id;
     $stmt->close();
-
-    if ($newUserId > 0) {
-        logActivity($conn, $newUserId, 'registered_account', 'users', $newUserId);
-    }
 
     header("Location: ../login.php");
     exit();
