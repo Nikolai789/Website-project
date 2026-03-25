@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/configurations/config.php";
+require_once __DIR__ . "/configurations/activity_logger.php";
 session_start();
 
 header('Content-Type: application/json');
@@ -55,12 +56,23 @@ if ($existing) {
     $new_qty = $existing['quantity'] + $quantity;
     $stmt = $conn->prepare("UPDATE cart_items SET quantity = ? WHERE cart_item_id = ?");
     $stmt->bind_param("ii", $new_qty, $existing['cart_item_id']);
+    $cartItemId = (int) $existing['cart_item_id'];
+    $logAction = 'increased_cart_quantity';
 } else {
     $stmt = $conn->prepare("INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)");
     $stmt->bind_param("iii", $user_id, $product_id, $quantity);
+    $cartItemId = 0;
+    $logAction = 'added_to_cart';
 }
 
-$stmt->execute();
+$saved = $stmt->execute();
+if (!$existing) {
+    $cartItemId = (int) $stmt->insert_id;
+}
 $stmt->close();
+
+if ($saved && $cartItemId > 0) {
+    logActivity($conn, $user_id, $logAction, 'cart_items', $cartItemId);
+}
 
 echo json_encode(['success' => true, 'message' => 'Added to cart!']);

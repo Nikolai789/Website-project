@@ -1,6 +1,9 @@
 <?php
 
 require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/authentication.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
+requireAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'] ?? '';
@@ -54,6 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $imgStmt->close();
+    }
+
+    if ($productId) {
+        logCurrentUserActivity($conn, 'created_product', 'products', (int) $productId);
     }
 }
 

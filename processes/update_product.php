@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/authentication.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
+requireAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: ../admin.php");
@@ -203,6 +206,7 @@ if ($ok) {
     }
 
     $conn->commit();
+    logCurrentUserActivity($conn, 'updated_product', 'products', $productIdInt);
 } else {
     $conn->rollback();
 }

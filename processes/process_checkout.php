@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../configurations/config.php";
 require_once __DIR__ . "/../configurations/authentication.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
 session_start();
 
 requireLogin();
@@ -73,6 +74,7 @@ try {
     $stmt->close();
 
     $conn->commit();
+    logActivity($conn, $user_id, 'placed_order', 'orders', (int) $order_id);
 
 } catch (Exception $e) {
     $conn->rollback();

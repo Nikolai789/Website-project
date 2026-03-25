@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
 
 if (isset($_POST['register'])) {
     $username = trim($_POST['username'] ?? '');
@@ -55,7 +56,12 @@ if (isset($_POST['register'])) {
     $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $username, $email, $hashed);
     $stmt->execute();
+    $newUserId = (int) $stmt->insert_id;
     $stmt->close();
+
+    if ($newUserId > 0) {
+        logActivity($conn, $newUserId, 'registered_account', 'users', $newUserId);
+    }
 
     header("Location: ../login.php");
     exit();
@@ -76,6 +82,8 @@ if (isset($_POST['login'])) {
         $_SESSION['username'] = $user['username'];
         $_SESSION['email']    = $user['email'];
         $_SESSION['user_role'] = $user['user_role'];
+
+        logActivity($conn, (int) $user['user_id'], 'logged_in', 'users', (int) $user['user_id']);
 
         if ($user['user_role'] === 'admin') {
             header("Location: ../admin.php");

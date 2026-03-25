@@ -2,6 +2,7 @@
 
 session_start();
 require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
 
 if (empty($_SESSION['username'])) {
     header("Location: ../login.php");
@@ -61,6 +62,8 @@ if (!empty($new_password)) {
     $stmt->bind_param("si", $hashed, $user_id);
     $stmt->execute();
     $stmt->close();
+
+    logActivity($conn, $user_id, 'changed_password', 'users', $user_id);
 }
 
 // ── Update username, email, address in DB ──
@@ -81,6 +84,8 @@ $stmt->close();
 $_SESSION['username'] = $username;
 $_SESSION['email']    = $email;
 $_SESSION['address']  = $address;
+
+logActivity($conn, $user_id, 'updated_profile', 'users', $user_id);
 
 $_SESSION['edit_success'] = 'Profile updated successfully!';
 header("Location: ../edit_profile.php");
