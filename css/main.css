@@ -111,3 +111,59 @@ main .product-items .products:hover{
     grid-column: 1 / -1;
     text-align: center;
 }
+/* ── Cart / Page Messages ── */
+.msg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    animation: msgSlideIn 0.35s ease both;
+}
+
+@keyframes msgSlideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.msg::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.msg-error {
+    background: rgba(255, 77, 106, 0.8);
+    border-top: 1px solid rgba(255, 77, 106, 0.2);
+    border-bottom: 1px solid rgba(255, 77, 106, 0.2);
+    color: #ffffff;
+}
+
+.msg-error::before {
+    background: #da1c3c;
+    box-shadow: 0 0 6px rgba(255, 77, 106, 0.7);
+    animation: dotPulse 1.8s ease-in-out infinite;
+}
+
+.msg-success {
+    background: rgba(61, 255, 176, 0.07);
+    border-top: 1px solid rgba(61, 255, 176, 0.2);
+    border-bottom: 1px solid rgba(61, 255, 176, 0.2);
+    color: #3dffb0;
+}
+
+.msg-success::before {
+    background: #3dffb0;
+    box-shadow: 0 0 6px rgba(61, 255, 176, 0.7);
+}
+
+@keyframes dotPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(255, 77, 106, 0.7); }
+    50%       { opacity: 0.4; box-shadow: 0 0 2px rgba(255, 77, 106, 0.3); }
+}
