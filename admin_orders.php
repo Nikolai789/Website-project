@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/configurations/config.php";
 require_once __DIR__ . "/configurations/authentication.php";
+require_once __DIR__ . "/configurations/db_helpers.php";
 requireAdmin();
 
 $allowedStatuses = ['pending', 'paid', 'shipped', 'delivered'];
@@ -18,51 +19,12 @@ $flashSuccess = $_SESSION['admin_order_success'] ?? '';
 $flashError = $_SESSION['admin_order_error'] ?? '';
 unset($_SESSION['admin_order_success'], $_SESSION['admin_order_error']);
 
-$query = "
-    SELECT
-        o.order_id,
-        o.user_id,
-        o.total_amount,
-        o.status,
-        o.created_at,
-        u.username,
-        u.email,
-        u.address
-    FROM orders o
-    JOIN users u ON o.user_id = u.user_id
-";
-
-$conditions = [];
-$params = [];
-$types = '';
-
-if ($statusFilter !== '') {
-    $conditions[] = "o.status = ?";
-    $params[] = $statusFilter;
-    $types .= 's';
-}
-
-if ($customerSearch !== '') {
-    $conditions[] = "(u.username LIKE ? OR u.email LIKE ?)";
-    $searchTerm = '%' . $customerSearch . '%';
-    $params[] = $searchTerm;
-    $params[] = $searchTerm;
-    $types .= 'ss';
-}
-
-if (!empty($conditions)) {
-    $query .= ' WHERE ' . implode(' AND ', $conditions);
-}
-
-$query .= ' ORDER BY o.created_at DESC';
-
-$stmt = $conn->prepare($query);
-if (!empty($params)) {
-    $stmt->bind_param($types, ...$params);
-}
+$stmt = $conn->prepare("CALL sp_get_admin_orders(?, ?)");
+$stmt->bind_param("ss", $statusFilter, $customerSearch);
 $stmt->execute();
 $orders = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+flushStoredProcedureResults($conn);
 
 $orderItems = [];
 if (!empty($orders)) {
@@ -72,14 +34,14 @@ if (!empty($orders)) {
 
     $stmt = $conn->prepare("
         SELECT
-            oi.order_id,
-            p.name,
-            oi.quantity,
-            oi.unit_price
-        FROM order_items oi
-        JOIN products p ON oi.product_id = p.product_id
-        WHERE oi.order_id IN ($placeholders)
-        ORDER BY oi.item_id ASC
+            order_id,
+            product_name,
+            quantity,
+            unit_price,
+            subtotal
+        FROM vw_order_item_details
+        WHERE order_id IN ($placeholders)
+        ORDER BY item_id ASC
     ");
     $stmt->bind_param($types, ...$orderIds);
     $stmt->execute();
@@ -224,10 +186,10 @@ function statusClassName(string $status): string
                                     <tbody>
                                         <?php foreach ($orderItems[$order['order_id']] ?? [] as $item): ?>
                                             <tr>
-                                                <td><?= htmlspecialchars($item['name']) ?></td>
+                                                <td><?= htmlspecialchars($item['product_name']) ?></td>
                                                 <td><?= (int) $item['quantity'] ?></td>
                                                 <td>PHP <?= number_format((float) $item['unit_price'], 2) ?></td>
-                                                <td>PHP <?= number_format((float) $item['unit_price'] * (int) $item['quantity'], 2) ?></td>
+                                                <td>PHP <?= number_format((float) $item['subtotal'], 2) ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

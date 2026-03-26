@@ -2,6 +2,7 @@
 require_once __DIR__ . "/configurations/config.php";
 require_once __DIR__ . "/configurations/authentication.php";
 require_once __DIR__ . "/configurations/activity_logger.php";
+require_once __DIR__ . "/configurations/db_helpers.php";
 requireAdmin();
 
 $availableTables = ['products', 'orders', 'users', 'cart_items'];
@@ -25,60 +26,13 @@ $logsTableExists = activityLogsTableExists($conn);
 $logs = [];
 
 if ($logsTableExists) {
-    $query = "
-        SELECT
-            l.log_id,
-            l.user_id,
-            l.action,
-            l.table_name,
-            l.record_id,
-            l.logged_at,
-            u.username,
-            u.email
-        FROM activity_logs l
-        LEFT JOIN users u ON l.user_id = u.user_id
-    ";
-
-    $conditions = [];
-    $params = [];
-    $types = '';
-
-    if ($tableFilter !== '') {
-        $conditions[] = "l.table_name = ?";
-        $params[] = $tableFilter;
-        $types .= 's';
-    }
-
-    if ($actionSearch !== '') {
-        $conditions[] = "l.action LIKE ?";
-        $params[] = '%' . $actionSearch . '%';
-        $types .= 's';
-    }
-
-    if ($userSearch !== '') {
-        $conditions[] = "(u.username LIKE ? OR u.email LIKE ? OR CAST(l.user_id AS CHAR) LIKE ?)";
-        $searchTerm = '%' . $userSearch . '%';
-        $params[] = $searchTerm;
-        $params[] = $searchTerm;
-        $params[] = $searchTerm;
-        $types .= 'sss';
-    }
-
-    if (!empty($conditions)) {
-        $query .= ' WHERE ' . implode(' AND ', $conditions);
-    }
-
-    $query .= ' ORDER BY l.logged_at DESC, l.log_id DESC LIMIT 250';
-
-    $stmt = $conn->prepare($query);
+    $stmt = $conn->prepare("CALL sp_get_activity_logs(?, ?, ?)");
     if ($stmt) {
-        if (!empty($params)) {
-            $stmt->bind_param($types, ...$params);
-        }
-
+        $stmt->bind_param("sss", $tableFilter, $actionSearch, $userSearch);
         $stmt->execute();
         $logs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
+        flushStoredProcedureResults($conn);
     }
 }
 

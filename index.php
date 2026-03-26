@@ -31,14 +31,8 @@ function blobToDataUri(?string $blob): ?string {
 }
 
 $sql = "
-    SELECT p.*,
-        (
-            SELECT pi.image FROM product_images pi
-            WHERE pi.product_id = p.product_id
-            ORDER BY pi.is_primary DESC, pi.image_id ASC
-            LIMIT 1
-        ) AS image_blob
-    FROM products p
+    SELECT *
+    FROM vw_catalog_products
     WHERE 1=1
 ";
 
@@ -47,13 +41,13 @@ $params = [];
 $types  = '';
 
 if ($category) {
-    $sql .= " AND p.category = ?";
+    $sql .= " AND category = ?";
     $types   .= 's';
     $params[] = $category;
 }
 
 if ($search !== '') {
-    $sql .= " AND p.name LIKE ?";
+    $sql .= " AND name LIKE ?";
     $types   .= 's';
     $like     = '%' . $search . '%';
     $params[] = $like;
@@ -128,6 +122,7 @@ if (!empty($params)) {
                                     <p class="name"><?= htmlspecialchars($product['name']) ?></p>
                                     <p class="price">₱<?= number_format($product['price'], 2) ?></p>
                                     <p class="stocks">Stock: <span><?= (int) $product['stock'] ?></span></p>
+                                    <p class="stocks"><?= htmlspecialchars($product['stock_status'] ?? '') ?></p>
                                 </div>
                             </a>
                         </div>

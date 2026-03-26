@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . "/configurations/config.php";
 require_once __DIR__ . "/configurations/authentication.php";
+require_once __DIR__ . "/configurations/db_helpers.php";
 
 requireLogin();
 
@@ -11,17 +12,13 @@ $user_id = (int) $_SESSION['user_id'];
 $orderSuccess = $_SESSION['order_success'] ?? '';
 unset($_SESSION['order_success']);
 
-// Fetch all orders for this user
-$stmt = $conn->prepare("
-    SELECT order_id, total_amount, status, created_at
-    FROM orders
-    WHERE user_id = ?
-    ORDER BY created_at DESC
-");
+// Fetch all orders for this user via stored procedure
+$stmt = $conn->prepare("CALL sp_get_user_orders(?)");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $orders = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+flushStoredProcedureResults($conn);
 
 // Fetch order items for each order
 $orderItems = [];
@@ -31,11 +28,10 @@ if (!empty($orders)) {
     $types = str_repeat('i', count($orderIds));
 
     $stmt = $conn->prepare("
-        SELECT oi.order_id, p.name, oi.quantity, oi.unit_price
-        FROM order_items oi
-        JOIN products p ON oi.product_id = p.product_id
-        WHERE oi.order_id IN ($placeholders)
-        ORDER BY oi.item_id ASC
+        SELECT order_id, product_name, quantity, unit_price, subtotal
+        FROM vw_order_item_details
+        WHERE order_id IN ($placeholders)
+        ORDER BY item_id ASC
     ");
     $stmt->bind_param($types, ...$orderIds);
     $stmt->execute();
@@ -138,7 +134,7 @@ function orderStatusClass(string $status): string
                 <?php foreach ($orders as $order): ?>
                     <?php
                         $items = $orderItems[$order['order_id']] ?? [];
-                        $itemCount = array_sum(array_map(static fn($item) => (int) $item['quantity'], $items));
+                        $itemCount = (int) ($order['item_count'] ?? 0);
                         $statusClass = orderStatusClass((string) $order['status']);
                     ?>
                     <article class="receipt-card">
@@ -187,10 +183,10 @@ function orderStatusClass(string $status): string
                                 <tbody>
                                     <?php foreach ($items as $item): ?>
                                         <tr>
-                                            <td><?= htmlspecialchars($item['name']) ?></td>
+                                            <td><?= htmlspecialchars($item['product_name']) ?></td>
                                             <td><?= (int) $item['quantity'] ?></td>
                                             <td>PHP <?= number_format((float) $item['unit_price'], 2) ?></td>
-                                            <td>PHP <?= number_format((float) $item['unit_price'] * (int) $item['quantity'], 2) ?></td>
+                                            <td>PHP <?= number_format((float) $item['subtotal'], 2) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

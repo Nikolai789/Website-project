@@ -53,7 +53,10 @@ if ($searchQuery !== '') {
 }
 
 $whereSql = count($conditions) ? ' WHERE ' . implode(' AND ', $conditions) : '';
-$productsResult = $conn->query("SELECT product_id, name, category, stock, price, date_added, description FROM products{$whereSql}{$orderBy}");
+$productsResult = $conn->query("
+    SELECT product_id, name, category, stock, stock_status, price, date_added, description
+    FROM vw_catalog_products{$whereSql}{$orderBy}
+");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,6 +138,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                             <th>product name</th>
                             <th>category</th>
                             <th>stock</th>
+                            <th>stock status</th>
                             <th>price</th>
                             <th>date added</th>
                             <th>product description</th>
@@ -148,6 +152,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                                     <td><?= htmlspecialchars($row['name']) ?></td>
                                     <td><?= htmlspecialchars($row['category']) ?></td>
                                     <td><?= (int) $row['stock'] ?></td>
+                                    <td><?= htmlspecialchars($row['stock_status'] ?? '') ?></td>
                                     <td>₱<?= number_format($row['price'], 2) ?></td>
                                     <td><?= date('M j, Y', strtotime($row['date_added'])) ?></td>
                                     <td><?= htmlspecialchars($row['description']) ?></td>
@@ -177,7 +182,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" class="empty-table-cell">No products found.</td>
+                                <td colspan="8" class="empty-table-cell">No products found.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
