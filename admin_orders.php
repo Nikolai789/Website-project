@@ -117,6 +117,7 @@ function statusClassName(string $status): string
             <nav class="admin-nav">
                 <a href="admin.php" class="tab">Products</a>
                 <a href="admin_orders.php" class="tab active">Orders</a>
+                <a href="admin_logs.php" class="tab">Logs</a>
             </nav>
 
             <a href="logout.php" class="admin-logout">logout</a>

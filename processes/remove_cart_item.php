@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -20,6 +21,8 @@ if ($cart_item_id <= 0) {
     header("Location: ../check-out/checkout.php");
     exit;
 }
+
+setActivityLogContext($conn, $user_id, 'removed_cart_item');
 
 // Delete only if the item belongs to this user
 $stmt = $conn->prepare("DELETE FROM cart_items WHERE cart_item_id = ? AND user_id = ?");

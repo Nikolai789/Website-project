@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/authentication.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
+requireAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: ../admin.php");
@@ -33,6 +36,8 @@ if ($productIdInt <= 0) {
     header("Location: ../admin.php");
     exit();
 }
+
+setCurrentActivityLogContext($conn, 'updated_product');
 
 /**
  * Compress uploaded image bytes to JPEG to reduce DB packet size.

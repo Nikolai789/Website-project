@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/configurations/config.php";
+require_once __DIR__ . "/configurations/activity_logger.php";
 session_start();
 
 header('Content-Type: application/json');
@@ -53,9 +54,11 @@ if (($current_cart_qty + $quantity) > $product['stock']) {
 // Update or insert
 if ($existing) {
     $new_qty = $existing['quantity'] + $quantity;
+    setActivityLogContext($conn, $user_id, 'increased_cart_quantity');
     $stmt = $conn->prepare("UPDATE cart_items SET quantity = ? WHERE cart_item_id = ?");
     $stmt->bind_param("ii", $new_qty, $existing['cart_item_id']);
 } else {
+    setActivityLogContext($conn, $user_id, 'added_to_cart');
     $stmt = $conn->prepare("INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)");
     $stmt->bind_param("iii", $user_id, $product_id, $quantity);
 }

@@ -2,6 +2,7 @@
 
 session_start();
 require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
 
 if (empty($_SESSION['username'])) {
     header("Location: ../login.php");
@@ -57,6 +58,7 @@ if (!empty($new_password)) {
 
     // Hash and update password
     $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+    setActivityLogContext($conn, $user_id, 'changed_password');
     $stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
     $stmt->bind_param("si", $hashed, $user_id);
     $stmt->execute();
@@ -64,6 +66,7 @@ if (!empty($new_password)) {
 }
 
 // ── Update username, email, address in DB ──
+setActivityLogContext($conn, $user_id, 'updated_profile');
 $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, address = ? WHERE user_id = ?");
 $stmt->bind_param("sssi", $username, $email, $address, $user_id);
 $stmt->execute();

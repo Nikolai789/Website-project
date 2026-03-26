@@ -1,8 +1,13 @@
 <?php
 
 require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/authentication.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
+requireAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    setCurrentActivityLogContext($conn, 'created_product');
+
     $name = $_POST['name'] ?? '';
     $category = $_POST['category'] ?? '';
     $price = $_POST['price'] ?? 0;

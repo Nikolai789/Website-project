@@ -1,9 +1,11 @@
 <?php
+require_once __DIR__ . "/database_settings.php";
+
 // this is where we connect to the database
-$host = "localhost";    // this stores the server address
-$user = "root";         // users who have access to mysql
-$password = "";         // password of the db
-$database = "gearhubDB";// database name, databse that wel access
+$host = DB_HOST;        // this stores the server address
+$user = DB_USER;        // users who have access to mysql
+$password = DB_PASSWORD;// password of the db
+$database = DB_NAME;    // database name, databse that wel access
 
 $conn = new mysqli($host, $user, $password, $database); // this stores databse connection, it automatically connect to the database
 

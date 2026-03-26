@@ -531,6 +531,15 @@ body {
     gap: 10px;
 }
 
+.logs-filter-form {
+    display: flex;
+    gap: 10px;
+}
+
+.logs-filters-right {
+    flex-wrap: wrap;
+}
+
 .admin-flash {
     margin: 0 0 18px;
     padding: 12px 14px;
@@ -732,6 +741,44 @@ body {
 
 .order-status-select {
     min-width: 220px;
+}
+
+.logs-table td {
+    vertical-align: top;
+}
+
+.log-user {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.log-user-name {
+    color: #0f172a;
+    font-size: 14px;
+}
+
+.log-user-meta {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.log-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.log-pill-table {
+    background: #f8fafc;
+    color: #334155;
 }
 
 @media (max-width: 900px) {

@@ -71,6 +71,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
             <nav class="admin-nav">
                 <a href="admin.php" class="tab active">Products</a>
                 <a href="admin_orders.php" class="tab">Orders</a>
+                <a href="admin_logs.php" class="tab">Logs</a>
             </nav>
 
             <a href="logout.php" class="admin-logout">logout</a>
