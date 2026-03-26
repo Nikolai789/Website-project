@@ -197,6 +197,13 @@ p a:hover {
     text-decoration: none;
 }
 
+.admin-login-link {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
 /* ── Divider between heading and form ── */
 h2::after {
     content: '';

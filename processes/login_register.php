@@ -66,6 +66,10 @@ if (isset($_POST['register'])) {
 if (isset($_POST['login'])) {
     $email    = trim($_POST['email']    ?? '');
     $password = $_POST['password']      ?? '';
+    $loginPortal = $_POST['login_portal'] ?? 'user';
+    if ($loginPortal !== 'admin') {
+        $loginPortal = 'user';
+    }
 
     $stmt = $conn->prepare("SELECT user_id, username, email, password, user_role FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
@@ -74,6 +78,19 @@ if (isset($_POST['login'])) {
     $stmt->close();
 
     if ($user && password_verify($password, $user['password'])) {
+        if ($loginPortal === 'admin' && $user['user_role'] !== 'admin') {
+            $_SESSION['admin_login_error'] = 'This portal is for admin accounts only.';
+            header("Location: ../admin_login.php");
+            exit();
+        }
+
+        if ($loginPortal === 'user' && $user['user_role'] === 'admin') {
+            $_SESSION['login_error'] = 'Admin accounts must use the admin login form.';
+            $_SESSION['active_form'] = 'login';
+            header("Location: ../login.php");
+            exit();
+        }
+
         $_SESSION['user_id']  = $user['user_id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['email']    = $user['email'];
@@ -86,6 +103,12 @@ if (isset($_POST['login'])) {
         } else {
             header("Location: ../index.php");
         }
+        exit();
+    }
+
+    if ($loginPortal === 'admin') {
+        $_SESSION['admin_login_error'] = 'Incorrect email or password!';
+        header("Location: ../admin_login.php");
         exit();
     }
 

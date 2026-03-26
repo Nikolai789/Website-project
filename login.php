@@ -47,7 +47,9 @@ function isActiveForm($formName, $activeForm) {
                 <?= showError($errors['login']) ?>
                 <input type="email" name="email" placeholder="email" required>
                 <input type="password" name="password" placeholder="password" required>
+                <input type="hidden" name="login_portal" value="user">
                 <button type="submit" name="login">Login</button>
+                <p><a class="admin-login-link" href="admin_login.php">Login as Admin</a></p>
                 <p>Don't have an account? <a href="#" onclick="showForm('register-form')">Register</a></p>
             </form>
         </div>
