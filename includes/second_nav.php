@@ -8,14 +8,14 @@
             </script>
 
             <div class="search-bar">
-                <form method="GET" action="index.php" style="display:flex; align-items:center;">
+                <form method="GET" action="index.php" class="search-form">
                     <input 
                         type="text" 
                         name="search" 
                         placeholder="Search for products"
                         value="<?= htmlspecialchars($_GET['search'] ?? '') ?>"
                     >
-                    <button type="submit" style="background:none; border:none; cursor:pointer;"></button>
+                    <button type="submit" class="search-submit" aria-label="Search products"></button>
                 </form>
             </div>
 

@@ -74,6 +74,7 @@ unset($_SESSION['checkout_error'], $_SESSION['checkout_success']);
                 <div class="box">
                     <div class="order-summary">
                         <h2>Order Summary</h2>
+                        <div class="table-scroll">
                         <table>
                             <thead>
                                 <tr>
@@ -123,6 +124,7 @@ unset($_SESSION['checkout_error'], $_SESSION['checkout_success']);
                                 </tr>
                             </tfoot>
                         </table>
+                        </div>
                     </div>
                 </div>
 
@@ -140,7 +142,7 @@ unset($_SESSION['checkout_error'], $_SESSION['checkout_success']);
                             <?php if ($hasAddress): ?>
                                 <input type="text" value="<?= htmlspecialchars($user['address']) ?>" disabled>
                             <?php else: ?>
-                                <input type="text" value="No address on file" disabled style="color: red;">
+                                <input type="text" value="No address on file" disabled class="missing-address">
                                 <small>Please <a href="../edit_profile.php">update your profile</a> to add a shipping address before placing an order.</small>
                             <?php endif; ?>
 

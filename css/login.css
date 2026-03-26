@@ -20,6 +20,7 @@ body {
         url(../Assets/add_on_images/Adobe_Express_file.jpg);
     background-size: cover;
     background-position: center;
+    padding-inline: 1rem;
 }
 
 .form-box a:hover {
@@ -34,7 +35,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: auto;
-    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
     width: 100%;
 }
 
@@ -105,6 +106,20 @@ body {
 }
 
 .form-box a[href="index.php"]:hover {
+    color: #00c8ff;
+}
+
+.back-home-link {
+    display: inline-block;
+    font-size: 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+    line-height: 1.4;
+}
+
+.back-home-link:hover {
     color: #00c8ff;
 }
 
@@ -203,7 +218,9 @@ p a:hover {
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }
-
+.container .admin_login_title {
+    margin-top: 20px;
+}
 /* ── Divider between heading and form ── */
 h2::after {
     content: '';
@@ -231,7 +248,30 @@ h2::after {
 .login_bottom_text p {
     text-align: center;
     padding: 20px;
-    font-size: 0.9rem;
     color: #5a6a85;
-    font-size: 14px;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 48rem) {
+    body {
+        justify-content: center;
+        gap: 1.5rem;
+        padding-block: 1.5rem;
+    }
+
+    .login_title h1 {
+        font-size: 2rem;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 22.5rem) {
+    body,
+    .container {
+        padding-inline: 0.75rem;
+    }
+
+    .form-box {
+        padding: 1.5rem 1rem;
+    }
 }

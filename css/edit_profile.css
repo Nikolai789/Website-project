@@ -260,6 +260,12 @@ body {
     border-top: 1px solid var(--border);
 }
 
+.edit-actions-plain {
+    background: transparent;
+    border: none;
+    padding-top: 1.25rem;
+}
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -302,8 +308,31 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 560px) {
+    .edit-wrapper,
+    .back-link {
+        width: min(100%, 100%);
+    }
+
+    .edit-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .field-row { grid-template-columns: 1fr; }
     .edit-section { padding: 22px 18px; }
     .edit-actions { padding: 16px 18px; flex-direction: column-reverse; }
     .btn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 22.5rem) {
+    .edit-wrapper {
+        padding: 0 0.75rem;
+        margin: 2rem auto;
+    }
+
+    .edit-section,
+    .edit-actions {
+        padding-left: 0.875rem;
+        padding-right: 0.875rem;
+    }
 }

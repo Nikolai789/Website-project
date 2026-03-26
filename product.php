@@ -116,7 +116,7 @@ $imgSrcs = array_filter(array_map(
                     <button id="add-to-cart-btn" data-product-id="<?= $product['product_id'] ?>">
                         Add to Cart
                     </button>
-                    <p id="cart-message" style="display:none; margin-top: 8px;"></p>
+                    <p id="cart-message" class="cart-message"></p>
                 </div>
 
             </div>

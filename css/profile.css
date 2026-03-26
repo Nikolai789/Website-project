@@ -497,6 +497,16 @@ body {
 }
 
 @media (max-width: 600px) {
+    .profile-wrapper {
+        margin: 2rem auto 3rem;
+        padding: 0 1rem;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .profile-info {
         grid-template-columns: 1fr 1fr;
     }
@@ -519,5 +529,28 @@ body {
     .receipt-table {
         display: block;
         overflow-x: auto;
+    }
+}
+
+@media (max-width: 22.5rem) {
+    .profile-wrapper {
+        padding: 0 0.75rem;
+    }
+
+    .profile-identity,
+    .profile-actions,
+    .receipt-header,
+    .receipt-body {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .profile-info {
+        grid-template-columns: 1fr;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
     }
 }

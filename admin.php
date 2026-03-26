@@ -79,7 +79,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
 
         <main class="admin-main">
             <?php if (!empty($_GET['img_error'])): ?>
-                <p style="margin-top: 0; margin-bottom: 16px; color: #b00020;">
+                <p class="admin-inline-error">
                     Image upload failed: one or more images were too large. Please use smaller images.
                 </p>
             <?php endif; ?>
@@ -138,7 +138,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                             <th>price</th>
                             <th>date added</th>
                             <th>product description</th>
-                            <th style="width: 140px;">actions</th>
+                            <th class="actions-header">actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,7 +151,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                                     <td>₱<?= number_format($row['price'], 2) ?></td>
                                     <td><?= date('M j, Y', strtotime($row['date_added'])) ?></td>
                                     <td><?= htmlspecialchars($row['description']) ?></td>
-                                    <td style="text-align: right; white-space: nowrap; display: flex; justify-content: flex-end; gap: 6px; align-items: center;">
+                                    <td class="table-actions-cell">
                                         <button
                                             type="button"
                                             class="secondary-btn edit-product-btn"
@@ -177,7 +177,7 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" style="text-align: center; color: #555;">No products found.</td>
+                                <td colspan="6" class="empty-table-cell">No products found.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -336,14 +336,14 @@ $productsResult = $conn->query("SELECT product_id, name, category, stock, price,
     </div>
 
     <div class="modal-backdrop" id="delete-product-backdrop">
-        <div class="modal-panel" style="max-width: 380px;">
+        <div class="modal-panel modal-panel-compact">
             <h2 class="modal-title">delete product</h2>
-            <p id="delete-confirm-text" style="text-align: center; color: #6b7280; font-size: 14px; margin: 0 0 24px;">
+            <p id="delete-confirm-text" class="delete-confirm-text">
                 Are you sure you want to delete this product?
             </p>
             <form action="processes/delete_product.php" method="post">
                 <input type="hidden" name="product_id" id="delete-product-id">
-                <div class="modal-actions" style="justify-content: center;">
+                <div class="modal-actions modal-actions-center">
                     <button type="button" class="secondary-btn" id="close-delete-product">Cancel</button>
                     <button type="submit" class="danger-btn">Delete</button>
                 </div>

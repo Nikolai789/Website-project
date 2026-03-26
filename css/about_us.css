@@ -4,11 +4,11 @@
 
 .about_us {
     background-color: white;
-    padding: 40px;
-    margin: 30px auto;
-    width: 80%;
+    padding: clamp(1rem, 4vw, 2.5rem);
+    margin: clamp(1rem, 4vw, 2rem) auto;
+    width: min(100% - 2rem, 70rem);
     text-align: center;
-    line-height: 50px;
+    line-height: 1.8;
 }
 
 .hr_bot {
@@ -20,12 +20,11 @@
 
 .Introduction, .Offers, .Why_choose_us, .Mission, .Our_team {
     box-shadow: 0 3px 10px rgba(0,0,0,0.25);
-    border-radius: 12px;
-    padding: 50px;
+    border-radius: 0.75rem;
+    padding: clamp(1.25rem, 4vw, 3rem);
     transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
-    margin: 50px;
-    margin-top: -20px;
-    line-height: 40px;
+    margin: 1.5rem 0;
+    line-height: 1.75;
 }
 
 .Introduction:hover, .Offers:hover, .Why_choose_us:hover, .Mission:hover, .Our_team:hover {
@@ -41,4 +40,11 @@
 
 .about_us > .top_hr {
     color: black;
+}
+
+@media (max-width: 22.5rem) {
+    .about_us {
+        width: min(100% - 1rem, 70rem);
+        padding-inline: 0.75rem;
+    }
 }

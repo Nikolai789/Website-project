@@ -125,7 +125,7 @@ unset($_SESSION['edit_success'], $_SESSION['edit_error']);
             </div><!-- /.edit-card -->
 
             <!-- ── Actions ── -->
-            <div class="edit-actions" style="background:transparent;border:none;padding-top:20px;">
+            <div class="edit-actions edit-actions-plain">
                 <a href="profile.php" class="btn btn-ghost">Cancel</a>
                 <button type="submit" name="update_profile" class="btn btn-primary">Save Changes</button>
             </div>

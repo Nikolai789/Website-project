@@ -29,7 +29,7 @@ main {
 main .container {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 1.25rem;
 }
 
 /* ── Page Header ── */
@@ -92,8 +92,8 @@ main .container > .box:first-child h1 span {
 /* ── Two-column layout ── */
 .checkout-wrapper {
     display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 24px;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 23.75rem);
+    gap: 1.5rem;
     align-items: start;
 }
 
@@ -150,6 +150,10 @@ table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.875rem;
+}
+
+.table-scroll {
+    overflow-x: auto;
 }
 
 thead tr {
@@ -228,6 +232,7 @@ tfoot strong {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
 }
 
 /* ── Buttons ── */
@@ -311,6 +316,10 @@ tfoot strong {
     opacity: 0.8;
 }
 
+.missing-address {
+    color: var(--danger) !important;
+}
+
 .checkout-form small {
     font-size: 0.75rem;
     color: var(--danger);
@@ -364,8 +373,19 @@ tfoot strong {
         grid-template-columns: 1fr;
     }
 
-    thead th:last-child,
-    tbody td:last-child {
-        display: none;
+    .inline-form {
+        width: 100%;
+    }
+}
+
+@media (max-width: 22.5rem) {
+    main .container {
+        padding: 0 0.75rem;
+    }
+
+    thead th,
+    tbody td,
+    tfoot td {
+        padding-inline: 0.75rem;
     }
 }

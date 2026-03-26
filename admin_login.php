@@ -32,8 +32,8 @@ function showAdminError(string $error): string {
     <div class="container">
         <div class="form-box active" id="admin-login-form">
             <form action="processes/login_register.php" method="post">
-                <a href="login.php" style="text-decoration: none; color: rgb(255, 255, 255);">Back to user login</a>
-                <h2>Admin Login</h2>
+                <a href="login.php" class="back-home-link">Back to user login</a>
+                <h2 class="admin_login_title">Admin Login</h2>
                 <?= showAdminError($adminLoginError) ?>
                 <input type="email" name="email" placeholder="admin email" required>
                 <input type="password" name="password" placeholder="password" required>

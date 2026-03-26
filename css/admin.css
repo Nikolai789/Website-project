@@ -16,8 +16,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
-    height: 64px;
+    gap: 1rem;
+    padding: 0 2.5rem;
+    min-height: 4rem;
     background: #0f1120;
     border-bottom: 1px solid rgba(255,255,255,0.06);
     box-shadow: 0 1px 0 rgba(0,0,0,0.4), 0 4px 20px rgba(0,0,0,0.25);
@@ -28,14 +29,14 @@ body {
 }
  
 .admin-title {
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.02em;
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-right: 50px;
+    margin-right: 1rem;
 }
  
 .admin-title::before {
@@ -94,7 +95,7 @@ body {
  
 /* ── Main content ── */
 .admin-main {
-    padding: 32px 40px 56px;
+    padding: 2rem 2.5rem 3.5rem;
 }
  
 /* ── Toolbar ── */
@@ -207,7 +208,7 @@ body {
 }
  
 .search-input {
-    width: 280px;
+    width: min(100%, 17.5rem);
     padding: 9px 14px;
     font-size: 13px;
     font-family: 'DM Sans', sans-serif;
@@ -298,12 +299,16 @@ body {
  
 .modal-panel {
     background: #ffffff;
-    padding: 36px 36px 30px;
-    max-width: 440px;
+    padding: 2.25rem 2.25rem 1.875rem;
+    max-width: 27.5rem;
     width: 100%;
     border-radius: 14px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 32px 64px rgba(0,0,0,0.14);
     animation: modal-in 0.2s cubic-bezier(0.34, 1.36, 0.64, 1);
+}
+
+.modal-panel-compact {
+    max-width: 23.75rem;
 }
  
 @keyframes modal-in {
@@ -465,6 +470,10 @@ body {
     margin-top: 16px;
     padding-top: 16px;
     border-top: 1px solid #edf0f7;
+}
+
+.modal-actions-center {
+    justify-content: center;
 }
  
 .secondary-btn {
@@ -743,6 +752,37 @@ body {
     min-width: 220px;
 }
 
+.table-actions-cell {
+    text-align: right;
+    white-space: nowrap;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.375rem;
+    align-items: center;
+}
+
+.delete-confirm-text {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin: 0 0 1.5rem;
+}
+
+.admin-inline-error {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #b00020;
+}
+
+.actions-header {
+    width: 8.75rem;
+}
+
+.empty-table-cell {
+    text-align: center;
+    color: #555;
+}
+
 .logs-table td {
     vertical-align: top;
 }
@@ -782,6 +822,21 @@ body {
 }
 
 @media (max-width: 900px) {
+    .admin-header {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .admin-title,
+    .admin-nav,
+    .admin-logout {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin: 0;
+    }
+
     .order-card-header,
     .orders-toolbar,
     .filters {
@@ -803,5 +858,47 @@ body {
 
     .search-input {
         width: 100%;
+    }
+}
+
+@media (max-width: 48rem) {
+    .admin-main {
+        padding: 1.5rem 1rem 2.5rem;
+    }
+
+    .filters-right,
+    .filters-left,
+    .orders-filter-form,
+    .modal-actions,
+    .table-actions-cell {
+        flex-wrap: wrap;
+    }
+
+    .filter-select,
+    .search-input,
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn,
+    .order-status-select {
+        width: 100%;
+    }
+
+    .products-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 22.5rem) {
+    .admin-main {
+        padding-inline: 0.75rem;
+    }
+
+    .modal-panel {
+        padding: 1rem;
+    }
+
+    .row-2col {
+        grid-template-columns: 1fr;
     }
 }

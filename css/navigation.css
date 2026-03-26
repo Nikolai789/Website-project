@@ -2,20 +2,39 @@
     background-image: url(../Assets/add_on_images/Adobe_Express_file2.jpg);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
     box-shadow: 0 5px 5px rgba(0,0,0, 0.15);
     background-color: var(--bg-color);
     transition: 0.3s;
-    padding: 15px 30px;
+    padding: 0.9375rem clamp(1rem, 3vw, 1.875rem);
     border-top: none;
-    border-bottom: 3px solid #3f77b7;
+    border-bottom: 0.1875rem solid #3f77b7;
 }
 
 nav .brand{
-    font-size: 30px;
+    font-size: clamp(1.6rem, 3vw, 1.875rem);
     font-weight: bold;
     color: white;
     text-shadow: 0 0 6px #ffffff, 0 0 15px rgba(253, 255, 255, 0.7);
+    flex-shrink: 0;
+}
+
+.links,
+.registerlogin {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.links {
+    margin-right: auto;
+}
+
+.registerlogin {
+    margin-left: auto;
 }
 
 nav .green-text{
@@ -30,9 +49,9 @@ nav .green-text{
 
 nav a{
     text-decoration: none;
-    margin: 0px 10px;
+    margin: 0;
     display: inline-block;
-    padding: 10px 35px;
+    padding: 0.625rem 1rem;
     transition: background-color 0.3s ,color 0.3s;
     color: rgb(255, 255, 255);
     text-shadow: 0 0 6px #ffffff, 0 0 18px rgba(253, 255, 255, 0.7);
@@ -45,6 +64,40 @@ nav a:hover, nav a.active{
 }
 
 .registerlogin a {
-    margin-left: auto;
     color: white;
+}
+
+@media (max-width: 48rem) {
+    .navbar {
+        justify-content: center;
+    }
+
+    nav .brand,
+    .links,
+    .registerlogin {
+        width: 100%;
+        justify-content: center;
+    }
+
+    nav .brand {
+        text-align: center;
+    }
+
+    .links,
+    .registerlogin {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 30rem) {
+    nav a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .links,
+    .registerlogin {
+        gap: 0.25rem;
+    }
 }

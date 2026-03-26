@@ -8,57 +8,65 @@ main{
 main .container{
     display: block;
     box-shadow: 0 0 15px rgba(0, 0, 0, .5);
-    padding: 50px;
-    margin: 40px;
+    padding: clamp(1rem, 4vw, 3rem);
+    margin: clamp(1rem, 3vw, 2.5rem) auto;
+    width: min(calc(100% - 2rem), var(--container-max));
     background-color: rgb(244, 241, 241);
-    border-radius: 20px;
+    border-radius: 1.25rem;
 }
 
 main .product-detail{
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 32px;
-    padding: 25px;
+    gap: clamp(1.5rem, 4vw, 2rem);
+    padding: 1.5rem 0 0;
+    flex-wrap: wrap;
 }
 
 main .product-detail .product-info{
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
+    flex: 1 1 18rem;
+    min-width: 0;
+}
+
+main .product-detail .product-info h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
 }
 
 main .product-detail .product-info .price{
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
     color: darkred;
 }
 
 main .product-detail .product-info .description{
     line-height: 1.5;
-    font-size: 18px;
+    font-size: 1.125rem;
     color: darkblue;
 }
 
 main .product-detail .product-info .stocks{
-    font-size: 22px;
+    font-size: 1.375rem;
     font-weight: bold;
 }
 
 main .product-detail .product-info .stocks span{
-    font-size: 22px;
+    font-size: 1.375rem;
     font-weight: bold;
     color: darkgoldenrod;
 }
 
 main .product-detail .product-info .category{
-    font-size: 22px;
+    font-size: 1.375rem;
     font-weight: bold;
 }
 
 main .product-detail .product-info button{
-    padding: 12px 24px;
-    font-size: 16px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     background-color: rgb(139, 0, 0);
     color: white;
@@ -76,8 +84,8 @@ main .product-detail .product-info button:hover{
 }
 
 main .product-detail .product-info input{
-    padding: 10px;
-    font-size: 16px;
+    padding: 0.625rem;
+    font-size: 1rem;
     font-weight: bold;
     border: solid;
     transition: background-color 0.3s, transform 0.3s, color 0.3s;
@@ -87,8 +95,8 @@ main .product-detail .product-info input{
 /* ── Back link ── */
 .back-link {
     display: inline-block;
-    margin-bottom: 24px;
-    font-size: 14px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: #3f77b7;
     text-decoration: none;
@@ -104,21 +112,23 @@ main .product-detail .product-info input{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
     flex-shrink: 0;
+    flex: 1 1 20rem;
+    width: min(100%, 30rem);
 }
 
 .product-gallery .main-image {
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    aspect-ratio: 1;
     object-fit: contain;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .product-gallery .no-image {
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    aspect-ratio: 1;
     background-color: #e0e0e0;
     border-radius: 4px;
 }
@@ -128,7 +138,7 @@ main .product-detail .product-info input{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 0.75rem;
     flex-shrink: 0;
 }
 
@@ -140,9 +150,9 @@ main .product-detail .product-info input{
     color: white;
     border: none;
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    font-size: 22px;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.375rem;
     line-height: 1;
     cursor: pointer;
     transition: background 0.2s;
@@ -156,14 +166,50 @@ main .product-detail .product-info input{
     background: rgba(0, 0, 0, 0.7);
 }
 
-.gallery-arrow.left  { left: -18px; }
-.gallery-arrow.right { right: -18px; }
+.gallery-arrow.left  { left: 0.5rem; }
+.gallery-arrow.right { right: 0.5rem; }
 
 .image-counter {
     position: absolute;
-    bottom: -24px;
-    font-size: 13px;
+    bottom: -1.5rem;
+    font-size: 0.8125rem;
     color: #888;
     font-weight: 500;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.quantity-controls input {
+    width: min(100%, 6rem);
+}
+
+.cart-message {
+    display: none;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 48rem) {
+    main .container {
+        width: min(calc(100% - 1.5rem), var(--container-max));
+    }
+}
+
+@media (max-width: 22.5rem) {
+    main .container {
+        width: min(calc(100% - 1rem), var(--container-max));
+        padding: 1rem 0.75rem 1.5rem;
+    }
+
+    .quantity-controls,
+    .quantity-controls button,
+    .quantity-controls input,
+    #add-to-cart-btn {
+        width: 100%;
+    }
 }
 
