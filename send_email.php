@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
 
     } catch (Exception $e) {
-        echo "<p style='color:red; font-weight:bold;'>❌ Message could not be sent. Mailer Error: {$mail->ErrorInfo}</p>";
+        header("Location: contact.php?status=error");
         exit;
     }
 } else {
