@@ -6,6 +6,9 @@ $errors = [
     'login'    => $_SESSION['login_error']    ?? '',
     'register' => $_SESSION['register_error'] ?? ''
 ];
+$success = [
+    'register' => $_SESSION['register_success'] ?? ''
+];
 $activeForm = $_SESSION['active_form'] ?? 'login';
 
 session_unset();
@@ -13,6 +16,12 @@ session_unset();
 function showError($error) {
     return !empty($error)
         ? "<p class='error-message'>" . htmlspecialchars($error) . "</p>"
+        : '';
+}
+
+function showSuccess($message) {
+    return !empty($message)
+        ? "<p class='success-message'>" . htmlspecialchars($message) . "</p>"
         : '';
 }
 
@@ -45,6 +54,7 @@ function isActiveForm($formName, $activeForm) {
                 <a href="index.php" class="back-home-link">Back</a>
                 <h2>Login</h2>
                 <?= showError($errors['login']) ?>
+                <?= showSuccess($success['register']) ?>
                 <input type="email" name="email" placeholder="email" required>
                 <input type="password" name="password" placeholder="password" required>
                 <input type="hidden" name="login_portal" value="user">

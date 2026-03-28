@@ -2,9 +2,10 @@
 require_once __DIR__ . "/configurations/config.php";
 require_once __DIR__ . "/configurations/authentication.php";
 require_once __DIR__ . "/configurations/db_helpers.php";
+require_once __DIR__ . "/configurations/order_status.php";
 requireAdmin();
 
-$allowedStatuses = ['pending', 'paid', 'shipped', 'delivered'];
+$allowedStatuses = allowedOrderStatuses();
 $statusFilter = $_GET['status'] ?? '';
 if (!in_array($statusFilter, $allowedStatuses, true)) {
     $statusFilter = '';
@@ -53,15 +54,6 @@ if (!empty($orders)) {
     }
 }
 
-function formatStatusLabel(string $status): string
-{
-    return ucwords(str_replace('_', ' ', $status));
-}
-
-function statusClassName(string $status): string
-{
-    return preg_replace('/[^a-z0-9_-]/i', '-', strtolower($status)) ?: 'unknown';
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,7 +101,7 @@ function statusClassName(string $status): string
                             <option value="">All statuses</option>
                             <?php foreach ($allowedStatuses as $status): ?>
                                 <option value="<?= htmlspecialchars($status) ?>" <?= $statusFilter === $status ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars(formatStatusLabel($status)) ?>
+                                    <?= htmlspecialchars(formatOrderStatusLabel($status)) ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -138,7 +130,7 @@ function statusClassName(string $status): string
             <?php else: ?>
                 <section class="orders-grid">
                     <?php foreach ($orders as $order): ?>
-                        <?php $statusClass = statusClassName((string) $order['status']); ?>
+                        <?php $statusClass = orderStatusClassName((string) $order['status']); ?>
                         <article class="order-card">
                             <div class="order-card-header">
                                 <div>
@@ -151,7 +143,7 @@ function statusClassName(string $status): string
 
                                 <div class="order-header-right">
                                     <span class="order-status-badge status-<?= htmlspecialchars($statusClass) ?>">
-                                        <?= htmlspecialchars(formatStatusLabel((string) $order['status'])) ?>
+                                        <?= htmlspecialchars(formatOrderStatusLabel((string) $order['status'])) ?>
                                     </span>
                                     <span class="order-total">PHP <?= number_format((float) $order['total_amount'], 2) ?></span>
                                 </div>
@@ -208,7 +200,7 @@ function statusClassName(string $status): string
                                     >
                                         <?php foreach ($allowedStatuses as $status): ?>
                                             <option value="<?= htmlspecialchars($status) ?>" <?= $order['status'] === $status ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars(formatStatusLabel($status)) ?>
+                                                <?= htmlspecialchars(formatOrderStatusLabel($status)) ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>

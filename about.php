@@ -53,6 +53,6 @@
     
     <?php include "includes/footer.php" ?>
 
-    <script>src="javascript/script.js"</script>
+    <script src="javascript/script.js"></script>
 </body>
 </html>

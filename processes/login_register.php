@@ -59,6 +59,8 @@ if (isset($_POST['register'])) {
     $stmt->execute();
     $stmt->close();
 
+    $_SESSION['register_success'] = 'account created';
+    $_SESSION['active_form'] = 'login';
     header("Location: ../login.php");
     exit();
 }

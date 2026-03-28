@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../configurations/config.php";
 require_once __DIR__ . "/../configurations/authentication.php";
 require_once __DIR__ . "/../configurations/activity_logger.php";
+require_once __DIR__ . "/../configurations/order_status.php";
 requireAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -10,8 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $orderId = isset($_POST['order_id']) ? (int) $_POST['order_id'] : 0;
-$status = strtolower(trim($_POST['status'] ?? ''));
-$allowedStatuses = ['pending', 'paid', 'shipped', 'delivered'];
+$status = normalizeOrderStatus($_POST['status'] ?? '');
+$allowedStatuses = allowedOrderStatuses();
 
 if ($orderId <= 0 || !in_array($status, $allowedStatuses, true)) {
     $_SESSION['admin_order_error'] = 'Invalid order update request.';
@@ -38,6 +39,6 @@ $stmt->bind_param("si", $status, $orderId);
 $stmt->execute();
 $stmt->close();
 
-$_SESSION['admin_order_success'] = "Order #{$orderId} status updated to " . ucwords(str_replace('_', ' ', $status)) . '.';
+$_SESSION['admin_order_success'] = "Order #{$orderId} status updated to " . formatOrderStatusLabel($status) . '.';
 header("Location: ../admin_orders.php");
 exit;

@@ -395,6 +395,11 @@ body {
     color: #1d4ed8;
 }
 
+.receipt-status.status-paid-delivered {
+    background: #ecfdf3;
+    color: #166534;
+}
+
 .receipt-status.status-shipped {
     background: #ecfeff;
     color: #155e75;

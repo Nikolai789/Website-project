@@ -3,6 +3,7 @@ session_start();
 require_once __DIR__ . "/configurations/config.php";
 require_once __DIR__ . "/configurations/authentication.php";
 require_once __DIR__ . "/configurations/db_helpers.php";
+require_once __DIR__ . "/configurations/order_status.php";
 
 requireLogin();
 
@@ -43,15 +44,6 @@ if (!empty($orders)) {
     }
 }
 
-function formatOrderStatus(string $status): string
-{
-    return ucfirst($status);
-}
-
-function orderStatusClass(string $status): string
-{
-    return preg_replace('/[^a-z0-9_-]/i', '-', strtolower($status)) ?: 'unknown';
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,7 +127,7 @@ function orderStatusClass(string $status): string
                     <?php
                         $items = $orderItems[$order['order_id']] ?? [];
                         $itemCount = (int) ($order['item_count'] ?? 0);
-                        $statusClass = orderStatusClass((string) $order['status']);
+                        $statusClass = orderStatusClassName((string) $order['status']);
                     ?>
                     <article class="receipt-card">
                         <button
@@ -152,7 +144,7 @@ function orderStatusClass(string $status): string
                             <div class="receipt-summary">
                                 <span class="receipt-count"><?= $itemCount ?> item<?= $itemCount === 1 ? '' : 's' ?></span>
                                 <span class="receipt-status status-<?= htmlspecialchars($statusClass) ?>">
-                                    <?= htmlspecialchars(formatOrderStatus((string) $order['status'])) ?>
+                                    <?= htmlspecialchars(formatOrderStatusLabel((string) $order['status'])) ?>
                                 </span>
                                 <span class="receipt-total">PHP <?= number_format((float) $order['total_amount'], 2) ?></span>
                                 <span class="receipt-toggle" aria-hidden="true">▼</span>

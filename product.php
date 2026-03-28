@@ -5,7 +5,7 @@ $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($id <= 0) { header("Location: index.php"); exit; }
 
 // Fetch product
-$stmt = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
+$stmt = $conn->prepare("SELECT * FROM products WHERE product_id = ? AND is_archived = 0");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $product = $stmt->get_result()->fetch_assoc();

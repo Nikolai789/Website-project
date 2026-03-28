@@ -1,43 +1,15 @@
 <?php
+require_once __DIR__ . '/../configurations/url_helpers.php';
+
 // Ensure session is available for conditional nav rendering.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-}
-
-if (!function_exists('app_url')) {
-    function app_url(string $path = ''): string
-    {
-        static $basePath = null;
-
-        if ($basePath === null) {
-            $documentRoot = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : false;
-            $projectRoot = realpath(dirname(__DIR__));
-
-            if ($documentRoot && $projectRoot) {
-                $normalizedDocumentRoot = str_replace('\\', '/', $documentRoot);
-                $normalizedProjectRoot = str_replace('\\', '/', $projectRoot);
-
-                if (strpos($normalizedProjectRoot, $normalizedDocumentRoot) === 0) {
-                    $basePath = substr($normalizedProjectRoot, strlen($normalizedDocumentRoot));
-                }
-            }
-
-            if ($basePath === null || $basePath === false) {
-                $basePath = '';
-            }
-
-            $basePath = rtrim((string) $basePath, '/');
-        }
-
-        return $basePath . '/' . ltrim($path, '/');
-    }
 }
 ?>
 
 <head> 
     <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= htmlspecialchars(app_url('css/style.css')) ?>">
-    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('css/logout_modal.css')) ?>">
 </head>
 
     <nav>

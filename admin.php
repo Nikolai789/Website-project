@@ -3,6 +3,10 @@ require_once __DIR__ . "/configurations/config.php";
 require_once __DIR__ . "/configurations/authentication.php";
 requireAdmin();
 
+$flashSuccess = $_SESSION['admin_product_success'] ?? '';
+$flashError = $_SESSION['admin_product_error'] ?? '';
+unset($_SESSION['admin_product_success'], $_SESSION['admin_product_error']);
+
 $allowedCategories = ['Keyboard', 'Mouse', 'Headphone'];
 $selectedCategory = $_GET['category'] ?? '';
 if (!in_array($selectedCategory, $allowedCategories, true)) {
@@ -81,6 +85,14 @@ $productsResult = $conn->query("
         </header>
 
         <main class="admin-main">
+            <?php if ($flashSuccess !== ''): ?>
+                <p class="admin-flash admin-flash-success"><?= htmlspecialchars($flashSuccess) ?></p>
+            <?php endif; ?>
+
+            <?php if ($flashError !== ''): ?>
+                <p class="admin-flash admin-flash-error"><?= htmlspecialchars($flashError) ?></p>
+            <?php endif; ?>
+
             <?php if (!empty($_GET['img_error'])): ?>
                 <p class="admin-inline-error">
                     Image upload failed: one or more images were too large. Please use smaller images.

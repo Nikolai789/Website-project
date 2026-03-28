@@ -25,7 +25,7 @@ if ($product_id <= 0 || $quantity <= 0) {
 }
 
 // Check stock
-$stmt = $conn->prepare("SELECT stock FROM products WHERE product_id = ?");
+$stmt = $conn->prepare("SELECT stock FROM products WHERE product_id = ? AND is_archived = 0");
 $stmt->bind_param("i", $product_id);
 $stmt->execute();
 $product = $stmt->get_result()->fetch_assoc();

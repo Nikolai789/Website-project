@@ -245,6 +245,23 @@ h2::after {
     text-align: center;
 }
 
+.success-message {
+    color: #53e0a1;
+    font-size: 0.82rem;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: rgba(57, 224, 145, 0.08);
+    border: 1px solid rgba(57, 224, 145, 0.25);
+    border-radius: 7px;
+    text-align: center;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.success-message.hide-message {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+
 .login_bottom_text p {
     text-align: center;
     padding: 20px;

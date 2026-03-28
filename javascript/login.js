@@ -5,3 +5,19 @@ function showForm(formId) {
     document.getElementById(formId).classList.add("active")
     
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const successMessage = document.querySelector(".success-message");
+
+    if (!successMessage) {
+        return;
+    }
+
+    setTimeout(() => {
+        successMessage.classList.add("hide-message");
+
+        setTimeout(() => {
+            successMessage.remove();
+        }, 350);
+    }, 3000);
+});

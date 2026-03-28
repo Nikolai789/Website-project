@@ -1,3 +1,5 @@
+<?php require_once __DIR__ . '/../configurations/url_helpers.php'; ?>
+
 <nav>
         <div class="nav2">
 
@@ -8,7 +10,7 @@
             </script>
 
             <div class="search-bar">
-                <form method="GET" action="index.php" class="search-form">
+                <form method="GET" action="<?= htmlspecialchars(app_url('index.php')) ?>" class="search-form">
                     <input 
                         type="text" 
                         name="search" 
@@ -19,7 +21,7 @@
                 </form>
             </div>
 
-            <a class="cart" href="check-out/checkout.php">🛒 Cart</a>
+            <a class="cart" href="<?= htmlspecialchars(app_url('check-out/checkout.php')) ?>">🛒 Cart</a>
             
         </div>
     
