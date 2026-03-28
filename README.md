@@ -1,3 +1,10 @@
+# group members:
+    John Nikolai Camarillo
+    Gabriel Jee Buena
+    Alfred Angelo Bisas
+
+
+
 # GearHub Website
 
 GearHub is a PHP + MySQL ecommerce-style website for ordering gaming peripherals such as keyboards, mice, and headphones.
