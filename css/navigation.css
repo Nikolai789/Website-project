@@ -1,0 +1,104 @@
+.navbar{
+    background-image: url(../Assets/add_on_images/Adobe_Express_file2.jpg);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    box-shadow: 0 5px 5px rgba(0,0,0, 0.15);
+    background-color: var(--bg-color);
+    transition: 0.3s;
+    padding: 0.9375rem clamp(1rem, 3vw, 1.875rem);
+    border-top: none;
+    border-bottom: 0.1875rem solid #3f77b7;
+}
+
+nav .brand{
+    font-size: clamp(1.6rem, 3vw, 1.875rem);
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 6px #ffffff, 0 0 15px rgba(253, 255, 255, 0.7);
+    flex-shrink: 0;
+}
+
+.links,
+.registerlogin {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.links {
+    margin-right: auto;
+}
+
+.registerlogin {
+    margin-left: auto;
+}
+
+nav .green-text{
+    animation: shift 4s ease-in-out infinite;
+}
+
+@keyframes shift {
+  0%,100% { color: #00c8ff; text-shadow: 0 0 15px rgba(0,200,255,0.9); }
+  33%      { color: #b048ff; text-shadow: 0 0 15px rgba(176,72,255,0.9); }
+  66%      { color: #3dffb0; text-shadow: 0 0 15px rgba(61,255,176,0.9); }
+}
+
+nav a{
+    text-decoration: none;
+    margin: 0;
+    display: inline-block;
+    padding: 0.625rem 1rem;
+    transition: background-color 0.3s ,color 0.3s;
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 6px #ffffff, 0 0 18px rgba(253, 255, 255, 0.7);
+}
+
+nav a:hover, nav a.active{
+    background: #3f77b7;
+    color: white;
+    border-radius: 3px;
+}
+
+.registerlogin a {
+    color: white;
+}
+
+@media (max-width: 48rem) {
+    .navbar {
+        justify-content: center;
+    }
+
+    nav .brand {
+        width: 100%;
+        text-align: center;
+    }
+
+    .links,
+    .registerlogin {
+        justify-content: center;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 30rem) {
+    .navbar {
+        gap: 0.5rem;
+        padding-block: 0.75rem;
+    }
+
+    .navbar a {
+        width: auto;
+        text-align: center;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .links,
+    .registerlogin {
+        gap: 0.25rem;
+    }
+}

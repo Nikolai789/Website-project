@@ -1,0 +1,125 @@
+<?php
+session_start();
+require_once __DIR__ . "/../configurations/config.php";
+require_once __DIR__ . "/../configurations/activity_logger.php";
+
+if (isset($_POST['register'])) {
+    $username = trim($_POST['username'] ?? '');
+    $email    = trim($_POST['email']    ?? '');
+    $password = $_POST['password']      ?? '';
+
+    // Validate username length
+    if (strlen($username) < 6) {
+        $_SESSION['register_error'] = 'Username must be at least 6 characters.';
+        $_SESSION['active_form']    = 'register';
+        header("Location: ../login.php");
+        exit();
+    }
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['register_error'] = 'Please enter a valid email address.';
+        $_SESSION['active_form']    = 'register';
+        header("Location: ../login.php");
+        exit();
+    }
+
+
+        // Validate password length
+    if (strlen($password) < 6) {
+        $_SESSION['register_error'] = 'Password must be at least 6 characters.';
+        $_SESSION['active_form']    = 'register';
+        header("Location: ../login.php");
+        exit();
+    }
+
+
+    
+
+    // Check if email is already registered
+    $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $stmt->close();
+        $_SESSION['register_error'] = 'Email is already registered!';
+        $_SESSION['active_form']    = 'register';
+        header("Location: ../login.php");
+        exit();
+    }
+    $stmt->close();
+
+    // Insert new user
+    $hashed = password_hash($password, PASSWORD_DEFAULT);
+    setActivityLogContext($conn, null, 'registered_account');
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $username, $email, $hashed);
+    $stmt->execute();
+    $stmt->close();
+
+    $_SESSION['register_success'] = 'account created';
+    $_SESSION['active_form'] = 'login';
+    header("Location: ../login.php");
+    exit();
+}
+
+if (isset($_POST['login'])) {
+    $email    = trim($_POST['email']    ?? '');
+    $password = $_POST['password']      ?? '';
+    $loginPortal = $_POST['login_portal'] ?? 'user';
+    if ($loginPortal !== 'admin') {
+        $loginPortal = 'user';
+    }
+
+    $stmt = $conn->prepare("SELECT user_id, username, email, password, user_role FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $user = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if ($user && password_verify($password, $user['password'])) {
+        if ($loginPortal === 'admin' && $user['user_role'] !== 'admin') {
+            $_SESSION['admin_login_error'] = 'This portal is for admin accounts only.';
+            header("Location: ../admin_login.php");
+            exit();
+        }
+
+        if ($loginPortal === 'user' && $user['user_role'] === 'admin') {
+            $_SESSION['login_error'] = 'Admin accounts must use the admin login form.';
+            $_SESSION['active_form'] = 'login';
+            header("Location: ../login.php");
+            exit();
+        }
+
+        $_SESSION['user_id']  = $user['user_id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['email']    = $user['email'];
+        $_SESSION['user_role'] = $user['user_role'];
+
+        logActivity($conn, (int) $user['user_id'], 'logged_in', 'users', (int) $user['user_id']);
+
+        if ($user['user_role'] === 'admin') {
+            header("Location: ../admin.php");
+        } else {
+            header("Location: ../index.php");
+        }
+        exit();
+    }
+
+    if ($loginPortal === 'admin') {
+        $_SESSION['admin_login_error'] = 'Incorrect email or password!';
+        header("Location: ../admin_login.php");
+        exit();
+    }
+
+    $_SESSION['login_error'] = 'Incorrect email or password!';
+    $_SESSION['active_form'] = 'login';
+    header("Location: ../login.php");
+    exit();
+}
+
+// Fallback — neither button was submitted
+header("Location: ../login.php");
+exit();

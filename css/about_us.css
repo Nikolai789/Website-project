@@ -1,0 +1,50 @@
+* {
+    font-family: 'Exo 2', sans-serif;
+}
+
+.about_us {
+    background-color: white;
+    padding: clamp(1rem, 4vw, 2.5rem);
+    margin: clamp(1rem, 4vw, 2rem) auto;
+    width: min(100% - 2rem, 70rem);
+    text-align: center;
+    line-height: 1.8;
+}
+
+.hr_bot {
+    border: none;
+    margin-bottom: -20px;
+    height: 2px;
+    background-color: black;
+}
+
+.Introduction, .Offers, .Why_choose_us, .Mission, .Our_team {
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    border-radius: 0.75rem;
+    padding: clamp(1.25rem, 4vw, 3rem);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    margin: 1.5rem 0;
+    line-height: 1.75;
+}
+
+.Introduction:hover, .Offers:hover, .Why_choose_us:hover, .Mission:hover, .Our_team:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35); 
+    color: white;
+    background-color: #3f77b7;
+}
+
+.Offers ul {
+    list-style-type: none;
+}
+
+.about_us > .top_hr {
+    color: black;
+}
+
+@media (max-width: 22.5rem) {
+    .about_us {
+        width: min(100% - 1rem, 70rem);
+        padding-inline: 0.75rem;
+    }
+}

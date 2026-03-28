@@ -1,0 +1,391 @@
+/* ── Checkout Page — GearHub Theme ── */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@300;400;500&display=swap');
+
+:root {
+    --bg-deep:      #090d14;
+    --bg-card:      #0f1623;
+    --bg-card2:     #141c2e;
+    --bg-input:     #0a1220;
+    --accent:       #00c8ff;
+    --accent2:      #0077ff;
+    --text-primary: #e8edf5;
+    --text-muted:   #5a6a85;
+    --border:       rgba(0, 200, 255, 0.12);
+    --border-hover: rgba(0, 200, 255, 0.35);
+    --danger:       #ff4d6a;
+    --success:      #3dffb0;
+}
+
+/* ── Base ── */
+main {
+    background-color: var(--text-primary);
+    min-height: 100vh;
+    font-family: 'Exo 2', sans-serif;
+    color: var(--text-primary);
+    padding-bottom: 48px;
+}
+
+main .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+}
+
+/* ── Page Header ── */
+main .container > .box:first-child {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    margin: 0 0 32px 0;
+    padding: 0;
+}
+
+main .container > .box:first-child h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bg-card2);
+    background: transparent;
+    padding: 40px 0 0 0;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+main .container > .box:first-child h1::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--bg-card2), transparent);
+    opacity: 0.3;
+}
+
+main .container > .box:first-child h1 span {
+    color: var(--accent);
+}
+
+/* ── Messages ── */
+.msg {
+    padding: 11px 16px;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.msg-error {
+    background: rgba(255, 77, 106, 0.08);
+    border: 1px solid rgba(255, 77, 106, 0.25);
+    color: var(--danger);
+}
+
+.msg-success {
+    background: rgba(61, 255, 176, 0.08);
+    border: 1px solid rgba(61, 255, 176, 0.25);
+    color: var(--success);
+}
+
+/* ── Two-column layout ── */
+.checkout-wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 23.75rem);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* ── Cards ── */
+.box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
+    margin: 0;
+    animation: fadein 0.4s ease both;
+}
+
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Section headings inside cards ── */
+.order-summary h2,
+.checkout-form h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order-summary h2::after,
+.checkout-form h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+/* ── Order Summary ── */
+.order-summary {
+    padding: 0;
+    margin: 0;
+    gap: 0;
+}
+
+/* ── Table ── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+thead tr {
+    border-bottom: 1px solid var(--border);
+}
+
+thead th {
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+tbody tr {
+    border-bottom: 1px solid rgba(0,200,255,0.06);
+    transition: background 0.18s;
+}
+
+tbody tr:hover {
+    background: var(--bg-card2);
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody td {
+    padding: 14px 20px;
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+tfoot tr {
+    border-top: 1px solid var(--border);
+    background: var(--bg-card2);
+}
+
+tfoot td {
+    padding: 14px 20px;
+    font-size: 0.9rem;
+}
+
+tfoot strong {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+}
+
+/* ── Qty input ── */
+.qty-input {
+    width: 60px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 8px;
+    color: var(--text-primary);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.qty-input:focus {
+    border-color: rgba(0,200,255,0.45);
+    box-shadow: 0 0 0 3px rgba(0,200,255,0.07);
+}
+
+/* ── Inline forms ── */
+.inline-form {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* ── Buttons ── */
+.btn-update {
+    background: rgba(0,200,255,0.1);
+    border: 1px solid rgba(0,200,255,0.25);
+    color: var(--accent);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+
+.btn-update:hover {
+    background: rgba(0,200,255,0.18);
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(0,200,255,0.2);
+}
+
+.btn-remove {
+    background: rgba(255,77,106,0.08);
+    border: 1px solid rgba(255,77,106,0.25);
+    color: var(--danger);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+
+.btn-remove:hover {
+    background: rgba(255,77,106,0.18);
+    border-color: var(--danger);
+    box-shadow: 0 0 10px rgba(255,77,106,0.2);
+}
+
+/* ── Checkout / Delivery Details form ── */
+.checkout-form .box {
+    border-radius: 12px;
+}
+
+.checkout-form form {
+    padding: 20px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.checkout-form label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 10px;
+}
+
+.checkout-form label:first-of-type {
+    margin-top: 0;
+}
+
+.checkout-form input[type="text"] {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 14px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    outline: none;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.missing-address {
+    color: var(--danger) !important;
+}
+
+.checkout-form small {
+    font-size: 0.75rem;
+    color: var(--danger);
+    margin-top: 2px;
+}
+
+.checkout-form small a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.checkout-form small a:hover {
+    text-shadow: 0 0 8px rgba(0,200,255,0.5);
+}
+
+/* ── Place Order button ── */
+.checkout-form button[type="submit"] {
+    margin-top: 16px;
+    padding: 12px;
+    background: var(--accent2);
+    border: none;
+    border-radius: 7px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(0,200,255,0.25);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.checkout-form button[type="submit"]:hover:not(:disabled) {
+    box-shadow: 0 0 30px rgba(0,200,255,0.5);
+    transform: translateY(-1px);
+}
+
+.checkout-form button[type="submit"]:disabled {
+    background: rgba(255,77,106,0.15);
+    color: var(--danger);
+    box-shadow: none;
+    cursor: not-allowed;
+    border: 1px solid rgba(255,77,106,0.3);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .checkout-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .inline-form {
+        width: 100%;
+    }
+}
+
+@media (max-width: 22.5rem) {
+    main .container {
+        padding: 0 0.75rem;
+    }
+
+    thead th,
+    tbody td,
+    tfoot td {
+        padding-inline: 0.75rem;
+    }
+}
