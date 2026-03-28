@@ -17,6 +17,30 @@ if (!function_exists('activityLogLimitText')) {
     }
 }
 
+if (!function_exists('activityLogQuery')) {
+    function activityLogQuery(mysqli $conn, string $sql)
+    {
+        try {
+            return $conn->query($sql);
+        } catch (Throwable $e) {
+            return false;
+        }
+    }
+}
+
+if (!function_exists('activityLogPrepare')) {
+    function activityLogPrepare(mysqli $conn, string $sql): ?mysqli_stmt
+    {
+        try {
+            $stmt = $conn->prepare($sql);
+        } catch (Throwable $e) {
+            return null;
+        }
+
+        return $stmt ?: null;
+    }
+}
+
 if (!function_exists('getAuthenticatedUserId')) {
     function getAuthenticatedUserId(): ?int
     {
@@ -44,7 +68,7 @@ if (!function_exists('activityLogsTableExists')) {
             return $cache[$cacheKey];
         }
 
-        $tableCheck = $conn->query("SHOW TABLES LIKE 'activity_logs'");
+        $tableCheck = activityLogQuery($conn, "SHOW TABLES LIKE 'activity_logs'");
         $exists = $tableCheck && $tableCheck->num_rows > 0;
 
         if ($tableCheck) {
@@ -67,7 +91,8 @@ if (!function_exists('logActivity')) {
             return false;
         }
 
-        $stmt = $conn->prepare(
+        $stmt = activityLogPrepare(
+            $conn,
             "INSERT INTO activity_logs (user_id, action, table_name, record_id) VALUES (?, ?, ?, ?)"
         );
 
@@ -78,9 +103,14 @@ if (!function_exists('logActivity')) {
         $normalizedUserId = ($userId !== null && $userId > 0) ? $userId : null;
         $normalizedRecordId = ($recordId !== null && $recordId > 0) ? $recordId : null;
 
-        $stmt->bind_param("issi", $normalizedUserId, $action, $tableName, $normalizedRecordId);
-        $logged = $stmt->execute();
-        $stmt->close();
+        try {
+            $stmt->bind_param("issi", $normalizedUserId, $action, $tableName, $normalizedRecordId);
+            $logged = $stmt->execute();
+            $stmt->close();
+        } catch (Throwable $e) {
+            $stmt->close();
+            return false;
+        }
 
         return $logged;
     }
@@ -97,10 +127,10 @@ if (!function_exists('setActivityLogActor')) {
     function setActivityLogActor(mysqli $conn, ?int $userId): bool
     {
         if ($userId === null || $userId <= 0) {
-            return (bool) $conn->query("SET @actor_user_id = NULL");
+            return (bool) activityLogQuery($conn, "SET @actor_user_id = NULL");
         }
 
-        return (bool) $conn->query("SET @actor_user_id = " . (int) $userId);
+        return (bool) activityLogQuery($conn, "SET @actor_user_id = " . (int) $userId);
     }
 }
 
@@ -108,20 +138,24 @@ if (!function_exists('setActivityLogAction')) {
     function setActivityLogAction(mysqli $conn, ?string $action): bool
     {
         if ($action === null || trim($action) === '') {
-            return (bool) $conn->query("SET @activity_action = NULL");
+            return (bool) activityLogQuery($conn, "SET @activity_action = NULL");
         }
 
         $normalizedAction = activityLogLimitText($action, 100);
-        $escapedAction = $conn->real_escape_string($normalizedAction);
+        try {
+            $escapedAction = $conn->real_escape_string($normalizedAction);
+        } catch (Throwable $e) {
+            return false;
+        }
 
-        return (bool) $conn->query("SET @activity_action = '{$escapedAction}'");
+        return (bool) activityLogQuery($conn, "SET @activity_action = '{$escapedAction}'");
     }
 }
 
 if (!function_exists('setActivityLogSuppressed')) {
     function setActivityLogSuppressed(mysqli $conn, bool $suppressed): bool
     {
-        return (bool) $conn->query("SET @suppress_activity_log = " . ($suppressed ? '1' : '0'));
+        return (bool) activityLogQuery($conn, "SET @suppress_activity_log = " . ($suppressed ? '1' : '0'));
     }
 }
 
