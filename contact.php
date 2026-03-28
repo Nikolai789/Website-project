@@ -1,11 +1,9 @@
 <?php
-if (isset($_GET['status'])) {
-    if ($_GET['status'] == 'success') {
-        echo "<p style='color:green; text-align:center; font-weight:bold;'>✅ Your message was sent successfully!</p>";
-    } elseif ($_GET['status'] == 'error') {
-        echo "<p style='color:red; text-align:center; font-weight:bold;'>❌ Oops! Something went wrong. Please try again.</p>";
-    }
-}
+$status = $_GET['status'] ?? '';
+$statusMessages = [
+    'success' => 'Your message was sent successfully!',
+    'error' => 'Oops! Something went wrong. Please try again.',
+];
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +14,7 @@ if (isset($_GET['status'])) {
 
     <!-- these two tags are important for SEO to understand our website -->
     <meta name="description" content="we have a wide selection of gadget peripherals">
-    <meta name="keywords" content= "mouse, keyboards, headphones"> 
+    <meta name="keywords" content="mouse, keyboards, headphones">
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/footer.css">
@@ -29,6 +27,12 @@ if (isset($_GET['status'])) {
     <?php include "includes/nav.php" ?>
 
     <main class="Contact">
+        <?php if (isset($statusMessages[$status])): ?>
+            <p class="msg <?= $status === 'success' ? 'msg-success' : 'msg-error' ?>">
+                <?= htmlspecialchars($statusMessages[$status]) ?>
+            </p>
+        <?php endif; ?>
+
         <div class="contact_intro">
             <h1>Contact Us</h1>
             <p>If you have any questions or feedback, feel free to reach out to us!</p>
@@ -52,9 +56,9 @@ if (isset($_GET['status'])) {
 
         <div class="contact_details">
             <h2>Our Contact Details</h2>
-            <p><strong>Email:</strong> dummy@gmail.comp</p>
+            <p><strong>Email:</strong> gearhub21@gmail.com</p>
             <p><strong>Phone:</strong> +1 234 567 890</p>
-            <p><strong>Address:</strong> 123 Main Street, Anytown, USA</p>
+            <p><strong>Address:</strong> Apokon, Davao del Norte, Philippines</p>
         </div>
     </main>
     <?php include "includes/footer.php" ?>

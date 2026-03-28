@@ -31,7 +31,7 @@ require_once __DIR__ . '/../configurations/url_helpers.php';
                 <a href="https://www.instagram.com/pinyatooo_arts1?fbclid=IwY2xjawQrPGxleHRuA2FlbQIxMABicmlkETExd3FVemNUVFEzdWxFWDdmc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHpJB2tM_zXoInX87Y-cJ1FF-dEz761AmoIBe1KkVvfITCA9iUcWGG-RjSStU_aem_dKmc10fdxe7PEC5OyY4hKQ" target="_blank">
                     <img src="<?= htmlspecialchars(app_url('Assets/Icons/instagram-button-icon-set-instagram-screen-social-media-and-social-network-interface-template-stories-user-button-symbol-sign-logo-stories-liked-editorial-free-png.png')) ?>" alt="Instagram">
                 </a>
-                <a href="https://x.com/hews__" target="_blank">
+                <a href="https://x.com/masoq095" target="_blank">
                     <img src="<?= htmlspecialchars(app_url('Assets/Icons/new-twitter-x-logo-twitter-icon-x-social-media-icon-free-png.png')) ?>" alt="Twitter">
                 </a>
             </div>
