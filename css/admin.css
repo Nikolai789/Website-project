@@ -830,16 +830,32 @@ body {
     .admin-header {
         flex-wrap: wrap;
         justify-content: center;
-        padding: 1rem;
+        padding: 0.75rem 1rem;
+        row-gap: 0.5rem;
     }
 
-    .admin-title,
-    .admin-nav,
-    .admin-logout {
+    .admin-title {
         width: 100%;
+        display: flex;
         justify-content: center;
         text-align: center;
         margin: 0;
+    }
+
+    .admin-nav {
+        width: auto;
+        max-width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 0;
+    }
+
+    .admin-logout {
+        width: auto;
+        margin: 0;
+        padding: 7px 12px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.08);
     }
 
     .order-card-header,
@@ -897,6 +913,15 @@ body {
 @media (max-width: 22.5rem) {
     .admin-main {
         padding-inline: 0.75rem;
+    }
+
+    .admin-nav {
+        width: 100%;
+    }
+
+    .admin-nav .tab {
+        flex: 1 1 auto;
+        text-align: center;
     }
 
     .modal-panel {

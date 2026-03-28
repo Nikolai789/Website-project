@@ -72,28 +72,29 @@ nav a:hover, nav a.active{
         justify-content: center;
     }
 
-    nav .brand,
-    .links,
-    .registerlogin {
-        width: 100%;
-        justify-content: center;
-    }
-
     nav .brand {
+        width: 100%;
         text-align: center;
     }
 
     .links,
     .registerlogin {
+        justify-content: center;
         margin-left: 0;
         margin-right: 0;
     }
 }
 
 @media (max-width: 30rem) {
-    nav a {
-        width: 100%;
+    .navbar {
+        gap: 0.5rem;
+        padding-block: 0.75rem;
+    }
+
+    .navbar a {
+        width: auto;
         text-align: center;
+        padding: 0.5rem 0.75rem;
     }
 
     .links,
